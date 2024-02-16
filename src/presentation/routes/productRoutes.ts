@@ -10,5 +10,5 @@ const productService = new ProductService(productRepository);
 const productController = new ProductConstroller(productService);
 
 router.get("/getAllProducts", productController.onGetAllProducts.bind(productController))
-
+router.get("/getProductById/:productId", productController.onGetProductBuId.bind(productController))
 export default router;
