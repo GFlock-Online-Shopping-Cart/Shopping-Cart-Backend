@@ -11,7 +11,7 @@ export class UserRepository implements IUserRepository {
 
     async getUserById(userId: number): Promise<User | undefined> {
         const user = await myDataSource.getRepository(User).findOneBy({
-            userId
+            id: userId
         })
         return user ? user : undefined;
     }

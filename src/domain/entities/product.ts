@@ -1,9 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"; 
+import { 
+    Entity, 
+    PrimaryGeneratedColumn, 
+    Column, 
+    ManyToOne, 
+    ManyToMany,
+    OneToMany,
+    JoinTable 
+} from "typeorm"; 
+import { Category } from "./category"; 
+import { Checkout } from "./checkout";
 
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
-    productId: number;
+    id: number;
 
     @Column()
     productName: string;
@@ -19,4 +29,19 @@ export class Product {
 
     @Column()
     stock: number;
+
+    @ManyToOne((type) => Category, (category) => category.products, {
+        cascade: true,
+    })
+
+    @JoinTable()
+    categories: Category
+
+    
+    @OneToMany(() => Product, product => product.products)
+    products: Product[]
+
+    @ManyToMany(() => Checkout)
+    @JoinTable()
+    checkouts: Checkout[]
 }
