@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index } from "typeorm"; 
+import { Entity, PrimaryGeneratedColumn, Column, Index, OneToMany } from "typeorm"; 
+import { Checkout } from "./checkout";
 
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    userId: number;
+    id: number;
     
     @Column()
     firstName: string;
@@ -26,6 +27,9 @@ export class User {
 
     @Column()
     province: string;
+
+    @OneToMany(() => Checkout, (checkout) => checkout.users)
+    checkouts: Checkout[]
 
     // constructor(
     //     userId: number,

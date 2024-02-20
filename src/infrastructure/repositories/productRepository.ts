@@ -10,7 +10,7 @@ export class ProductRepository implements IProductRepository {
 
     async getProductById(productId: number): Promise<Product | undefined> {
         const product = await myDataSource.getRepository(Product).findOneBy({
-            productId
+            id: productId
         })
         return product ? product : undefined;
     }
