@@ -5,6 +5,7 @@ import { myDataSource } from "../config/dataSource"
 import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
 import productRouter from "./routes/productRoutes";
+import cartRouter from "./routes/cartRoutes"
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/product', productRouter);
+app.use('/api/cart', cartRouter);
 
 myDataSource.initialize()
     .then(() => {
