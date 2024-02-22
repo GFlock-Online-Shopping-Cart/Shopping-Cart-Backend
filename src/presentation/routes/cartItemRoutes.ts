@@ -10,5 +10,5 @@ const cartService = new CartService(cartRepository);
 const cartController = new CartController(cartService);
 
 router.post("/add-product", cartController.onAddToCart.bind(cartController));
-
+router.get("/view-cart/:cartId", cartController.onViewCart.bind(cartController));
 export default router;
