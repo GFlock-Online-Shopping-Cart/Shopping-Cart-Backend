@@ -20,7 +20,7 @@ export class CartRepository implements ICartRepository {
         .createQueryBuilder(CartItem, "cart_item")
         .innerJoinAndSelect(Product, "product", "cart_item.productId = product.id")
         .where("cart_item.cartId = :cartId", {cartId})
-        .select(["cart_item.cartId", "cart_item.productId", "product.productName", "product.productImage", "product.price"])
+        .select(["cart_item.cartId", "cart_item.productId", "cart_item.quantity", "product.productName", "product.productImage", "product.price"])
         .getRawMany();
     
         return viewCartitems;
