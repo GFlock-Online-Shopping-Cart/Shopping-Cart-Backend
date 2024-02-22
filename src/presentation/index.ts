@@ -5,7 +5,7 @@ import { myDataSource } from "../config/dataSource"
 import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
 import productRouter from "./routes/productRoutes";
-import cartItemRouter from "./routes/cartItemRoutes"
+import cartItemRouter from "./routes/cartRoutes"
 
 const app = express();
 

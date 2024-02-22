@@ -1,7 +1,7 @@
-import { Cart } from "./entities/cart"; 
 import { Product } from "./entities/product"; 
+import { CartItem } from "./entities/cartItem"; 
 
 export interface ICartRepository {
-    addToCartProduct(cartDetails: any): Promise<Cart>;
+    addToCartProduct(productDetails: any): Promise<CartItem>;
     viewCart(cartId: number): Promise<Product[]>
 }
