@@ -12,6 +12,7 @@ export class CartController {
             res.status(200).json({message: "Item added successfully", data: addedItem});
         } catch(err) {
             next(err);
+            
         }
     }
 
