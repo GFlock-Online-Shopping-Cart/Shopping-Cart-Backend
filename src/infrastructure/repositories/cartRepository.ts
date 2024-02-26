@@ -18,13 +18,13 @@ export class CartRepository implements ICartRepository {
     }
 
     async viewCart(cartId: number): Promise<Product[]> {
-        const viewCartitems = await myDataSource
+        const viewCartItems = await myDataSource
         .createQueryBuilder(CartItem, "cart_item")
         .innerJoinAndSelect(Product, "product", "cart_item.productId = product.id")
         .where("cart_item.cartId = :cartId", {cartId})
         .select(["cart_item.cartId", "cart_item.productId", "product.productName", "product.productImage", "product.price"])
         .getRawMany();
     
-        return viewCartitems;
+        return viewCartItems;
     }
 }
