@@ -22,9 +22,25 @@ export class CartRepository implements ICartRepository {
         .createQueryBuilder(CartItem, "cart_item")
         .innerJoinAndSelect(Product, "product", "cart_item.productId = product.id")
         .where("cart_item.cartId = :cartId", {cartId})
-        .select(["cart_item.cartId", "cart_item.productId", "product.productName", "product.productImage", "product.price"])
+        .select(["cart_item.cartId", "cart_item.productId", "cart_item.quantity", "product.productName", "product.productImage", "product.price"])
         .getRawMany();
     
         return viewCartItems;
+    }
+
+    async removeProductFromCart(productId: number): Promise<CartItem[]> {
+        const cartItemRepository = myDataSource.getRepository(CartItem);
+        const itemToRemove = await cartItemRepository.findOneBy({
+            productId
+        });
+        
+        if (!itemToRemove) {
+            throw new Error('Product not found in cart');
+        }
+    
+        await cartItemRepository.delete(productId);
+        
+        const remainingItems = await cartItemRepository.find();
+        return remainingItems;
     }
 }
