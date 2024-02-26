@@ -20,4 +20,10 @@ export class CartController {
         const cart = await this.cartItemService.viewCart(cartId);
         res.status(200).json({message: "success", data: cart})
     }
+
+    async onRemoveProductFromCart(req: Request, res: Response, next: NextFunction) {
+        const productId = Number(req.params.productId);
+        const cart = await this.cartItemService.viewCart(productId)
+        res.status(200).json({message: "Successfully Removed", data: cart})
+    }
 }

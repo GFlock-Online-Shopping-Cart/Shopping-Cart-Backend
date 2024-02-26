@@ -27,4 +27,20 @@ export class CartRepository implements ICartRepository {
     
         return viewCartitems;
     }
+
+    async removeProductFromCart(productId: number): Promise<CartItem[]> {
+        const cartItemRepository = myDataSource.getRepository(CartItem);
+        const itemToRemove = await cartItemRepository.findOneBy({
+            productId
+        });
+        
+        if (!itemToRemove) {
+            throw new Error('Product not found in cart');
+        }
+    
+        await cartItemRepository.delete(productId);
+        
+        const remainingItems = await cartItemRepository.find();
+        return remainingItems;
+    }
 }

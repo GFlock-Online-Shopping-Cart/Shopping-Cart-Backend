@@ -11,4 +11,5 @@ const cartController = new CartController(cartService);
 
 router.post("/add-to-cart", cartController.onAddToCart.bind(cartController));
 router.get("/view-cart/:cartId", cartController.onViewCart.bind(cartController));
+router.delete("/remove-product/:productId", cartController.onRemoveProductFromCart.bind(cartController))
 export default router;
