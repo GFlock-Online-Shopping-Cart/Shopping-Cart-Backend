@@ -1,6 +1,5 @@
 import { myDataSource } from "../../config/dataSource"; 
 import { ICartRepository } from "../../domain/cartRepository"; 
-import { Cart } from "../../domain/entities/cart";
 import { CartItem } from "../../domain/entities/cartItem";
 import { Product } from "../../domain/entities/product";
 
@@ -28,19 +27,21 @@ export class CartRepository implements ICartRepository {
         return viewCartitems;
     }
 
-    async removeProductFromCart(productId: number): Promise<CartItem[]> {
-        const cartItemRepository = myDataSource.getRepository(CartItem);
-        const itemToRemove = await cartItemRepository.findOneBy({
-            productId
-        });
+    async removeProductFromCart(cartId: number, productId:number): Promise<string> {
         
+        const cartRepository = myDataSource.getRepository(CartItem);
+
+        const itemToRemove = await cartRepository.findOne({
+            where: {
+                cartId,
+                productId
+            },
+        });
         if (!itemToRemove) {
             throw new Error('Product not found in cart');
+        } else {
+            await cartRepository.delete(itemToRemove);
+            return ("Cart item removed successfully.")
         }
-    
-        await cartItemRepository.delete(productId);
-        
-        const remainingItems = await cartItemRepository.find();
-        return remainingItems;
     }
 }
