@@ -24,7 +24,8 @@ export class CartController {
 
     async onRemoveProductFromCart(req: Request, res: Response, next: NextFunction) {
         const productId = Number(req.params.productId);
-        const cart = await this.cartItemService.viewCart(productId)
-        res.status(200).json({message: "Successfully Removed", data: cart})
+        const cartId = Number(req.params.cartId)
+        const removedItem = await this.cartItemService.removeProductFromCart(cartId, productId)
+        res.status(200).json({message: "Successfully Removed", data: removedItem})
     }
 }
