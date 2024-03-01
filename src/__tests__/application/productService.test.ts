@@ -1,6 +1,5 @@
 import { ProductService } from "../../application/productService"; 
 import { ProductRepository } from "../../infrastructure/repositories/productRepository"; 
-import { Product } from "../../domain/entities/product"; 
 
 describe('ProductService', () => {
     let productService: ProductService;
@@ -23,7 +22,7 @@ describe('ProductService', () => {
                     "productName": "Moose Tshirt",
                     "productImage": "moose.jpg",
                     "description": "S,M, L, XL sizes are available",
-                    "price": "990",
+                    "price": 990.00,
                     "stock": 1000
                   },
                   {
@@ -31,7 +30,7 @@ describe('ProductService', () => {
                     "productName": "Jump Suit",
                     "productImage": "jump-suit.jpg",
                     "description": "S,M, L, XL sizes are available",
-                    "price": "2200",
+                    "price": 2200.00,
                     "stock": 1230
                   },
             ]);
@@ -50,7 +49,7 @@ describe('ProductService', () => {
                     "productName": "Moose Tshirt",
                     "productImage": "moose.jpg",
                     "description": "S,M, L, XL sizes are available",
-                    "price": "990",
+                    "price": 990.00,
                     "stock": 1000
                   }
             )

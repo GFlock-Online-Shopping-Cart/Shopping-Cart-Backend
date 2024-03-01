@@ -34,7 +34,7 @@ describe('ProductController', () => {
               "productName": "Moose Tshirt",
               "productImage": "moose.jpg",
               "description": "S,M, L, XL sizes are available",
-              "price": "990",
+              "price": 990.00,
               "stock": 1000
             },
             {
@@ -42,7 +42,7 @@ describe('ProductController', () => {
               "productName": "Jump Suit",
               "productImage": "jump-suit.jpg",
               "description": "S,M, L, XL sizes are available",
-              "price": "2200",
+              "price": 2200.00,
               "stock": 1230
             },
       ];
@@ -89,7 +89,7 @@ describe('ProductController', () => {
               "productName": "Moose Tshirt",
               "productImage": "moose.jpg",
               "description": "S,M, L, XL sizes are available",
-              "price": "990",
+              "price": 990.00,
               "stock": 1000
             }
       ];
