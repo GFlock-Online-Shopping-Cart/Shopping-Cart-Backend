@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1709262455149" clover="3.2.0">
-  <project timestamp="1709262455149" name="All files">
-    <metrics statements="75" coveredstatements="69" conditionals="4" coveredconditionals="4" methods="19" coveredmethods="8" elements="98" coveredelements="81" complexity="0" loc="75" ncloc="75" packages="5" files="8" classes="8"/>
+<coverage generated="1709288798430" clover="3.2.0">
+  <project timestamp="1709288798430" name="All files">
+    <metrics statements="89" coveredstatements="75" conditionals="6" coveredconditionals="6" methods="23" coveredmethods="10" elements="118" coveredelements="91" complexity="0" loc="89" ncloc="89" packages="5" files="9" classes="9"/>
     <package name="application">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
       <file name="productService.ts" path="/home/randima/online-shopping-cart/shopping-cart-backend/src/application/productService.ts">
@@ -37,14 +37,14 @@
       <file name="checkout.ts" path="/home/randima/online-shopping-cart/shopping-cart-backend/src/domain/entities/checkout.ts">
         <metrics statements="9" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
       </file>
       <file name="product.ts" path="/home/randima/online-shopping-cart/shopping-cart-backend/src/domain/entities/product.ts">
         <metrics statements="16" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
@@ -83,20 +83,37 @@
       </file>
     </package>
     <package name="infrastructure.repositories">
-      <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <metrics statements="7" coveredstatements="7" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
       <file name="productRepository.ts" path="/home/randima/online-shopping-cart/shopping-cart-backend/src/infrastructure/repositories/productRepository.ts">
-        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <metrics statements="7" coveredstatements="7" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="18" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="15" count="2" type="cond" truecount="4" falsecount="0"/>
       </file>
     </package>
     <package name="presentation.controllers">
-      <metrics statements="15" coveredstatements="15" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+      <metrics statements="29" coveredstatements="21" conditionals="2" coveredconditionals="2" methods="7" coveredmethods="5"/>
+      <file name="CartController.ts" path="/home/randima/online-shopping-cart/shopping-cart-backend/src/presentation/controllers/CartController.ts">
+        <metrics statements="14" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="2"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+      </file>
       <file name="ProductController.ts" path="/home/randima/online-shopping-cart/shopping-cart-backend/src/presentation/controllers/ProductController.ts">
         <metrics statements="15" coveredstatements="15" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
         <line num="4" count="1" type="stmt"/>
