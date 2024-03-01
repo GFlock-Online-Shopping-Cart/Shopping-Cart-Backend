@@ -15,6 +15,6 @@ export class ProductRepository implements IProductRepository {
         const product = await myDataSource.getRepository(Product).findOneBy({
             id: productId
         })
-        return product ? product : undefined;
+        return product ?? undefined
     }
 }

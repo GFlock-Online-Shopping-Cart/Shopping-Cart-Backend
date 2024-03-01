@@ -6,8 +6,10 @@ import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
 import productRouter from "./routes/productRoutes";
 
+const cors = require('cors');
 const app = express();
 
+app.use(cors());
 // JSON body-parser middleware
 app.use(express.json());
 
@@ -18,8 +20,8 @@ app.use('/api/product', productRouter);
 myDataSource.initialize()
     .then(() => {
     console.log("Database is connected");
-    app.listen(3000, () => {
-        console.log('Server listening on port 3000');
+    app.listen(3001, () => {
+        console.log('Server listening on port 3001');
     });
     
     })

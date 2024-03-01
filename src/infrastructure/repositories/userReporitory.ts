@@ -13,7 +13,7 @@ export class UserRepository implements IUserRepository {
         const user = await myDataSource.getRepository(User).findOneBy({
             id: userId
         })
-        return user ? user : undefined;
+        return user ?? undefined
     }
 
     async createUser(userDetails: any): Promise<User> {
