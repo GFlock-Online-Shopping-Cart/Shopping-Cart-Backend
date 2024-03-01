@@ -10,7 +10,7 @@ export const myDataSource = new DataSource({
     password: "",
     database: "shopping_cart",
     entities: ["src/domain/entities/*.ts"],
-    logging: true,
+    logging: false,
     synchronize: true,  //entity will be synced with the db, everytime when run the application
 })
 
