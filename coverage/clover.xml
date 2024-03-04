@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1709532693521" clover="3.2.0">
-  <project timestamp="1709532693521" name="All files">
-    <metrics statements="95" coveredstatements="86" conditionals="6" coveredconditionals="6" methods="23" coveredmethods="12" elements="124" coveredelements="104" complexity="0" loc="95" ncloc="95" packages="5" files="9" classes="9"/>
+<coverage generated="1709536660691" clover="3.2.0">
+  <project timestamp="1709536660691" name="All files">
+    <metrics statements="101" coveredstatements="92" conditionals="6" coveredconditionals="6" methods="27" coveredmethods="16" elements="134" coveredelements="114" complexity="0" loc="101" ncloc="101" packages="5" files="10" classes="10"/>
     <package name="application">
-      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
+      <file name="cartService.ts" path="/home/randima/online-shopping-cart/shopping-cart-backend/src/application/cartService.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+      </file>
       <file name="productService.ts" path="/home/randima/online-shopping-cart/shopping-cart-backend/src/application/productService.ts">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="3" count="1" type="stmt"/>
