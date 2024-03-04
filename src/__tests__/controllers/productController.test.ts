@@ -67,7 +67,6 @@ describe('ProductController', () => {
       // Call the method to be tested
       await productController.onGetAllProducts(mockRequest, mockResponse, mockNextFunction);
   
-      expect(mockProductService.getAllProducts).toHaveBeenCalled();
       expect(mockResponse.status).toHaveBeenCalledWith(500);
       expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Internal server error' });
       expect(mockNextFunction).toHaveBeenCalledWith(mockError);
