@@ -2,9 +2,11 @@ import { myDataSource } from "../../config/dataSource";
 import { Product } from "../../domain/entities/product";
 import { ProductRepository } from "../../infrastructure/repositories/productRepository";
 
+jest.mock("../../config/dataSource");
+
 describe("productRepository", () => {
   let productRepository: ProductRepository;
-
+  
   beforeAll(() => {
     productRepository = new ProductRepository();
   });
@@ -13,7 +15,7 @@ describe("productRepository", () => {
     it("should return all products", async () => {
       const mockFind = jest.fn().mockResolvedValue([
         {
-          id: 1,
+          id: 10,
           productName: "Moose Tshirt",
           productImage: "moose.jpg",
           description: "S,M, L, XL sizes are available",
@@ -21,7 +23,7 @@ describe("productRepository", () => {
           stock: 1000,
         },
         {
-          id: 2,
+          id: 11,
           productName: "Jump Suit",
           productImage: "jump-suit.jpg",
           description: "S,M, L, XL sizes are available",
