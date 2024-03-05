@@ -1,6 +1,6 @@
+import { Request, Response, NextFunction } from 'express';
 import { ProductController } from '../../presentation/controllers/ProductController'; 
 import { ProductService } from '../../application/productService';
-import { Request, Response, NextFunction } from 'express';
 
 describe('ProductController', () => {
   let productController: ProductController;

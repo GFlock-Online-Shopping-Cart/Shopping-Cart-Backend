@@ -1,6 +1,6 @@
+import { Service } from "typedi";
 import { NextFunction, Request, Response } from "express";
 import { AuthService } from "../../application/authService";
-import { Service } from "typedi";
 
 @Service()
 export class AuthController {
@@ -17,10 +17,6 @@ export class AuthController {
         } catch(err) {
             next(err);
         }
-        
-        
-        
-        
         // validate inputs
     }
 }

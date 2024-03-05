@@ -1,6 +1,6 @@
+import { Request, Response, NextFunction } from "express";
 import { CartController } from "../../presentation/controllers/CartController";
 import { CartService } from "../../application/cartService";
-import { Request, Response, NextFunction } from "express";
 
 describe('CartController', () => {
     let cartController: CartController;

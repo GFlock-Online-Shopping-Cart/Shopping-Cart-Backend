@@ -1,14 +1,13 @@
 import "reflect-metadata";
+import swaggerUi from "swagger-ui-express";
+import swaggerJsDoc from "swagger-jsdoc";
 import express from "express";
 import { myDataSource } from "../config/dataSource";
-import swaggerJsDoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
 
 import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
 import productRouter from "./routes/productRoutes";
 import cartItemRouter from "./routes/cartRoutes";
-import { Product } from "../domain/entities/product";
 
 const cors = require("cors");
 const app = express();

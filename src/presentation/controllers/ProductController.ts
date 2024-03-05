@@ -1,6 +1,6 @@
+import { Service } from "typedi";
 import { NextFunction, Request, Response } from "express"; 
 import { ProductService } from "../../application/productService"; 
-import { Service } from "typedi";
 
 @Service()
 export class ProductController {

@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction, Router } from "express"; 
-import { CartController } from "../controllers/CartController"; 
 import Container from "typedi";
+import { Router } from "express"; 
+import { CartController } from "../controllers/CartController"; 
 
 const router = Router();
 

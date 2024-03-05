@@ -1,5 +1,5 @@
-import { Product } from "../domain/entities/product"; 
 import { Service } from "typedi"; 
+import { Product } from "../domain/entities/product"; 
 import { ProductRepository } from "../infrastructure/repositories/productRepository";
 
 @Service()

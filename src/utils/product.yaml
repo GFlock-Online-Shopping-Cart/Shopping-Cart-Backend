@@ -1,8 +1,6 @@
 paths:
   /api/product/products:
           get:
-            # security:
-            #   - bearerAuth: []
             summary: Shows all products to the user.
             description: User can view all the products, details with product name, image, descriptio, price and stock. If there occurrs an error in server side user can view the error message like Internal server error. 
             tags:

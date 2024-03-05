@@ -15,10 +15,6 @@ export class Checkout {
     @Column()
     cardNumber: number;
 
-    // @ManyToMany(() => CartItem)
-    // @JoinTable()
-    // cartItems: CartItem[]
-
     @ManyToOne(() => User, (user) => user.checkouts, {
         cascade: true,
     })
