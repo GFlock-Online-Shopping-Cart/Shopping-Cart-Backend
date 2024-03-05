@@ -1,0 +1,155 @@
+/api/cart/add-to-cart:
+    post: 
+      summary: add a product to the cart for given productId
+      description: User can add a product to the cart for given productId
+      tags:
+        - Cart
+      requestBody:
+                required: true
+                content: 
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                              cartId:
+                                type: number
+                                example: 6
+                              productId:
+                                type: number
+                                example: 3
+                              quantity: 
+                                type: number
+                                example: 2
+      responses:
+        '200':
+          description: A json object with Item added successfully message and data object with cartId, productId and quantity
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Item added successfully",
+                  "data": {
+                    "cartId": 6,
+                    "productId": 2,
+                    "quantity": 2
+                  }
+                }
+                properties: 
+                  message: 
+                    type: string
+                    example: Item added successfully
+                  data:
+                    type: object
+                    properties:
+                      cartId:
+                        type: number
+                        example: 6
+                      productId:
+                        type: number
+                        example: 3
+                      quantity: 
+                        type: number
+                        example: 2
+
+        '500':
+          description: "Shows the Internal server error message when there is an error in server side"
+
+/api/cart/view-cart/{cartId}:
+  get:
+    summary: view the cart for given cartId
+    description: User can view the cart with added cart items for given cartId
+    tags:
+      - Cart
+    parameters:
+            - name: cartId
+              in: path
+              required: true
+              schema: 
+                type: number
+    responses:
+          '200':
+            description: A JSON object of message and data object with cart_item_cartId, cart_item_productId, cart_item_quantity, product_productName, product_productImage, product_price.
+            content:
+                      application/json:
+                          schema: 
+                              type: object
+                              example: 
+                                {
+                                  "message": "Successfully view the cart",
+                                  "data": 
+                                  {
+                                    "cart_item_cartId": 6,
+                                    "cart_item_productId": 1,
+                                    "cart_item_quantity": 2,
+                                    "product_productName": "Moose Tshirt",
+                                    "product_productImage": "moose.jpg",
+                                    "product_price": 990.00
+                                  }
+                                }
+                              properties:
+                                message:
+                                  type: string
+                                  example: "Successfully view the cart"
+                                data:
+                                  type: object
+                                  properties:
+                                    cart_item_cartId: 
+                                      type: number
+                                      example: 6
+                                    cart_item_productId:
+                                      type: number
+                                      example: 1
+                                    cart_item_quantity: 
+                                      type: number
+                                      example: 4
+                                    product_productName: 
+                                      type: string
+                                      example: "Moose Tshirt"
+                                    product_productImage:
+                                      type: string
+                                      example: "moose.jpg"
+                                    product_price: 
+                                      type: number
+                                      example: 1000.00
+          '500':
+            description: "Shows the Internal server error message when there is an error in server side"
+/api/cart/remove-product/{cartId}/{productId}:
+  delete:
+    summary: delete a cart item from cart for given cartId and productId
+    description: User can remove a product which he no need for given cartId and the productId
+    tags:
+      - Cart
+    parameters:
+            - name: cartId
+              in: path
+              required: true
+              schema: 
+                type: number
+            - name: productId
+              in: path
+              required: true
+              schema:
+                type: number
+    responses:
+          '200':
+            description: A JSON object of message and data object with cart_item_cartId, cart_item_productId, cart_item_quantity, product_productName, product_productImage, product_price.
+            content:
+                      application/json:
+                          schema: 
+                              type: object
+                              example: 
+                                {
+                                  "message": "Successfully Removed",
+                                  "data": "Cart item removed successfully."
+                                }
+                              properties:
+                                    message:
+                                      type: string
+                                      example: "Successfully Removed"
+                                    data:
+                                      type: string
+                                      example: "Cart item removed successfully."
+          '500':
+            description: "Shows the Internal server error message when there is an error in server side"
+                            
