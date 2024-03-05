@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { AuthService } from "../../application/authService";
+import { Service } from "typedi";
 
-
+@Service()
 export class AuthController {
     constructor(private authService: AuthService) {}
 

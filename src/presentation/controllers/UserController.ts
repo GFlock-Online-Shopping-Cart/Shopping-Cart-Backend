@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '../../application/userService'; 
+import { Service } from 'typedi';
 
+@Service()
 export class UserController {
     constructor(private userService: UserService) {}
 

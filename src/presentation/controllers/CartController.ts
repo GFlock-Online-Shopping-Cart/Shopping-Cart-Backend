@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express"; 
-import { CartService } from "../../application/cartService"; 
+import { CartService } from "../../application/cartService";
+import { Service } from "typedi"; 
 
+@Service()
 export class CartController {
     constructor(private cartItemService: CartService) {}
 

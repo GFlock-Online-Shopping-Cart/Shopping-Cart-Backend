@@ -1,14 +1,10 @@
 import { Router} from "express";
 import { AuthController } from "../controllers/AuthController";
-import { UserRepository } from "../../infrastructure/repositories/userReporitory";
-import { AuthService } from "../../application/authService";
+import Container from "typedi";
 
 const router = Router();
 
-const userReporitory = new UserRepository();
-const authService = new AuthService(userReporitory);
-const authController = new AuthController(authService);
-
+const authController = Container.get(AuthController)
 router.post("/signup", authController.onSignUp.bind(authController))
 
 export default router;

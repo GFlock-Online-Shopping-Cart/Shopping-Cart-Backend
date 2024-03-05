@@ -1,13 +1,10 @@
 import { Request, Response, NextFunction, Router } from "express"; 
 import { CartController } from "../controllers/CartController"; 
-import { CartRepository } from "../../infrastructure/repositories/cartRepository"; 
-import { CartService } from "../../application/cartService"; 
+import Container from "typedi";
 
 const router = Router();
 
-const cartRepository = new CartRepository();
-const cartService = new CartService(cartRepository);
-const cartController = new CartController(cartService);
+const cartController = Container.get(CartController)
 
 router.post("/add-to-cart", cartController.onAddToCart.bind(cartController));
 router.get("/view-cart/:cartId", cartController.onViewCart.bind(cartController));

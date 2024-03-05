@@ -1,10 +1,10 @@
-import { IUserRepository } from "../domain/userRepository"; 
 import { User } from "../domain/entities/user";
 import { Service } from "typedi";
+import { UserRepository } from "../infrastructure/repositories/userReporitory";
 
 @Service()
 export class UserService {
-    constructor(private readonly userRepository: IUserRepository) {}
+    constructor(private readonly userRepository: UserRepository) {}
 
     async getAllUsers(): Promise<User[]> {
         return await this.userRepository.getAllUsers();
