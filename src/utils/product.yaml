@@ -1,0 +1,117 @@
+paths:
+  /api/product/products:
+          get:
+            summary: Shows all products to the user.
+            description: User can view all the products, details with product name, image, descriptio, price and stock. If there occurrs an error in server side user can view the error message like Internal server error. 
+            tags:
+             - Product
+            responses:
+                '200':
+                    description: A JSON object of id, productName, productImage, description, price and stock.
+                    content:
+                        application/json:
+                            schema: 
+                                type: array
+                                example: [
+                                  {
+                                    "id": 1,
+                                    "productName": "Moose Tshirt",
+                                    "productImage": "moose.jpg",
+                                    "description": "S,M, L, XL sizes are available",
+                                    "price": "990",
+                                    "stock": 1000
+                                  },
+                                  {
+                                    "id": 2,
+                                    "productName": "Jump Suit",
+                                    "productImage": "jump-suit.jpg",
+                                    "description": "S,M, L, XL sizes are available",
+                                    "price": "2200",
+                                    "stock": 1230
+                                  }
+                                ]
+                                properties:
+                                  id: 
+                                    type: number
+                                    example: 1
+                                  productName:
+                                    type: string
+                                    example: "Moose Tshirt"
+                                  productImage: 
+                                    type: string
+                                    example: image.jpg
+                                  description: 
+                                    type: string
+                                    example: "S, M, L, XL sizes are available"
+                                  price:
+                                    type: number
+                                    example: 990.00
+                                  stock: 
+                                    type: number
+                                    example: 1000
+
+                '500':
+                  description: "Shows the Internal server error message when there is an error in server side"
+
+  /api/product/getProductById/{productId}:
+        get:
+          summary: show a product for given productId
+          description: User can view a product, details with id, productName, productImage, description, price and stock for given productId.
+  
+          parameters:
+              - name: productId
+                in: path
+                required: true
+                schema: 
+                  type: number
+          tags:
+             - Product
+          responses:
+            '200':
+              description: A JSON object of id, productName, productImage, description, price and stock for given productId.
+              content:
+                        application/json:
+                            schema: 
+                                type: object
+                                example: 
+                                  {
+                                    "message": "Success",
+                                    "data": {
+                                      "productId": 1,
+                                      "productName": "Moose Tshirt",
+                                      "productImage": "moose.jpg",
+                                      "description": "S,M, L, XL sizes are available",
+                                      "price": "990",
+                                      "stock": 1000,
+                                    }
+                                  }
+                                properties:
+                                  message:
+                                    type: string
+                                    example: "Success"
+                                  data:
+                                    type: object
+                                    properties:
+                                      id: 
+                                        type: number
+                                        example: 1
+                                      productName:
+                                        type: string
+                                        example: "Moose Tshirt"
+                                      productImage: 
+                                        type: string
+                                        example: image.jpg
+                                      description: 
+                                        type: string
+                                        example: "S, M, L, XL sizes are available"
+                                      price:
+                                        type: number
+                                        example: 990.00
+                                      stock: 
+                                        type: number
+                                        example: 1000
+
+            '404':
+              description: "Shows the Product not found error message when the product is not in the database for given productId"
+            '500':
+              description: "Shows the Internal server error message when there is an error in server side"

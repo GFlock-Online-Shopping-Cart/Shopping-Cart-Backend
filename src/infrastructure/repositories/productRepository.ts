@@ -1,7 +1,9 @@
+import { Service } from "typedi";
 import { myDataSource } from "../../config/dataSource"; 
 import { Product } from "../../domain/entities/product"; 
 import { IProductRepository } from "../../domain/productRepository"; 
 
+@Service()
 export class ProductRepository implements IProductRepository {
     async getAllProducts(): Promise<Product[]> {
         const allProducts = await myDataSource.getRepository(Product).find()
@@ -12,6 +14,6 @@ export class ProductRepository implements IProductRepository {
         const product = await myDataSource.getRepository(Product).findOneBy({
             id: productId
         })
-        return product ? product : undefined;
+        return product ?? undefined
     }
 }

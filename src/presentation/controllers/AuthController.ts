@@ -1,7 +1,8 @@
+import { Service } from "typedi";
 import { NextFunction, Request, Response } from "express";
 import { AuthService } from "../../application/authService";
 
-
+@Service()
 export class AuthController {
     constructor(private authService: AuthService) {}
 
@@ -16,10 +17,6 @@ export class AuthController {
         } catch(err) {
             next(err);
         }
-        
-        
-        
-        
         // validate inputs
     }
 }

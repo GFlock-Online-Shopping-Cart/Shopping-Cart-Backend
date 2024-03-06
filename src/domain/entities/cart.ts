@@ -1,7 +1,6 @@
 import {
     Entity, 
     PrimaryGeneratedColumn, 
-    Column, 
     OneToOne, 
     OneToMany,
     JoinColumn 
@@ -9,7 +8,6 @@ import {
 
 import { User } from "./user";
 import { CartItem } from "./cartItem";
-// import { ProductToCart } from "./productsToCart";
 
 @Entity()
 export class Cart {

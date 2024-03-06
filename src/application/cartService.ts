@@ -1,11 +1,11 @@
 import { Service } from "typedi"; 
-import { ICartRepository } from "../domain/cartRepository";
 import { Product } from "../domain/entities/product";
 import { CartItem } from "../domain/entities/cartItem";
+import { CartRepository } from "../infrastructure/repositories/cartRepository";
 
 @Service()
 export class CartService {
-    constructor(private readonly cartRepository: ICartRepository) {}
+    constructor(private readonly cartRepository: CartRepository) {}
 
     async addToCartProduct(cartDetails: any): Promise<CartItem> {
         return await this.cartRepository.addToCartProduct(cartDetails);

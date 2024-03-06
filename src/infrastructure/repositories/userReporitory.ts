@@ -1,8 +1,9 @@
+import { Service } from "typedi";
 import { myDataSource } from "../../config/dataSource";
 import { User } from "../../domain/entities/user";
 import { IUserRepository } from "../../domain/userRepository";
 
-
+@Service()
 export class UserRepository implements IUserRepository {
     async getAllUsers(): Promise<User[]> {
         const allUsers = await myDataSource.getRepository(User).find()
@@ -13,7 +14,7 @@ export class UserRepository implements IUserRepository {
         const user = await myDataSource.getRepository(User).findOneBy({
             id: userId
         })
-        return user ? user : undefined;
+        return user ?? undefined
     }
 
     async createUser(userDetails: any): Promise<User> {

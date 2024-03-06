@@ -31,25 +31,4 @@ export class User {
     @OneToMany(() => Checkout, (checkout) => checkout.users)
     checkouts: Checkout[]
 
-    // constructor(
-    //     userId: number,
-    //     firstName: string,
-    //     lastName: string,
-    //     emailAddress: string,
-    //     mobileNumber: string,
-    //     streetAddress: string,
-    //     city: string,
-    //     province: string,
-    //     password: string,
-    //     ) {
-    //         this.userId = userId;
-    //         this.firstName = firstName;
-    //         this.lastName = lastName;
-    //         this.emailAddress = emailAddress;
-    //         this.mobileNumber = mobileNumber;
-    //         this.streetAddress = streetAddress;
-    //         this.city = city;
-    //         this.province = province;
-    //         this.password = password;
-    //     }
 }

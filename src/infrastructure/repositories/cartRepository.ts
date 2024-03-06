@@ -1,8 +1,10 @@
+import { Service } from "typedi";
 import { myDataSource } from "../../config/dataSource"; 
 import { ICartRepository } from "../../domain/cartRepository"; 
 import { CartItem } from "../../domain/entities/cartItem";
 import { Product } from "../../domain/entities/product";
 
+@Service()
 export class CartRepository implements ICartRepository {
     async addToCartProduct(productDetails: any): Promise<CartItem> {
         const { productId, quantity, cartId } = productDetails;

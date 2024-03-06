@@ -1,6 +1,8 @@
+import { Service } from "typedi"; 
 import { Request, Response, NextFunction } from "express"; 
-import { CartService } from "../../application/cartService"; 
+import { CartService } from "../../application/cartService";
 
+@Service()
 export class CartController {
     constructor(private cartItemService: CartService) {}
 
@@ -11,6 +13,7 @@ export class CartController {
             const addedItem = await this.cartItemService.addToCartProduct(body)
             res.status(200).json({message: "Item added successfully", data: addedItem});
         } catch(err) {
+            res.status(500).json({message: "Internal server error"})
             next(err);
             
         }
@@ -19,13 +22,23 @@ export class CartController {
     async onViewCart(req: Request, res: Response, next: NextFunction) {
         const cartId = Number(req.params.cartId);
         const cart = await this.cartItemService.viewCart(cartId);
-        res.status(200).json({message: "success", data: cart})
+
+        try {
+            res.status(200).json({message: "Successfully view the cart", data: cart})
+        } catch(err) {
+            res.status(500).json({message: "Internal server error"})
+            next(err)
+        }
     }
 
     async onRemoveProductFromCart(req: Request, res: Response, next: NextFunction) {
         const productId = Number(req.params.productId);
         const cartId = Number(req.params.cartId)
         const removedItem = await this.cartItemService.removeProductFromCart(cartId, productId)
-        res.status(200).json({message: "Successfully Removed", data: removedItem})
+        try {
+            res.status(200).json({message: "Successfully Removed", data: removedItem})
+        } catch(err) {
+            res.status(500).json({message: "Internal server error"})
+        }
     }
 }

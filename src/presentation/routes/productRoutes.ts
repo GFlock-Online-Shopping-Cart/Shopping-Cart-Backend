@@ -1,13 +1,10 @@
+import Container from "typedi";
 import { Router } from "express"; 
-import { ProductConstroller } from "../controllers/ProductConstroller"; 
-import { ProductRepository } from "../../infrastructure/repositories/productRepository"; 
-import { ProductService } from "../../application/productService"; 
+import { ProductController } from "../controllers/ProductController"; 
 
 const router = Router();
 
-const productRepository = new ProductRepository();
-const productService = new ProductService(productRepository);
-const productController = new ProductConstroller(productService);
+const productController = Container.get(ProductController)
 
 router.get("/products", productController.onGetAllProducts.bind(productController))
 router.get("/getProductById/:productId", productController.onGetProductById.bind(productController))
