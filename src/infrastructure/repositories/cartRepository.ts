@@ -3,6 +3,7 @@ import { myDataSource } from "../../config/dataSource";
 import { ICartRepository } from "../../domain/cartRepository"; 
 import { CartItem } from "../../domain/entities/cartItem";
 import { Product } from "../../domain/entities/product";
+import { error } from "console";
 
 @Service()
 export class CartRepository implements ICartRepository {
@@ -45,5 +46,27 @@ export class CartRepository implements ICartRepository {
             await cartRepository.delete(itemToRemove);
             return ("Cart item removed successfully.")
         }
+    }
+
+    async modifyCart(cartDetails: any): Promise<CartItem> {
+        const { cartId, productId, quantity } = cartDetails
+
+        const cartItem = new CartItem();
+        cartItem.cartId = cartId;
+        cartItem.productId = productId;
+        cartItem.quantity = quantity;
+
+        const itemToUpdate = await myDataSource.getRepository(CartItem).findOneBy({
+            cartId, productId
+        });
+
+        if (itemToUpdate) {
+            myDataSource.getRepository(CartItem).merge(itemToUpdate, cartItem);
+            const results = await myDataSource.getRepository(CartItem).save(cartItem);
+            return results;
+        } else {
+            throw new Error('Cart item not found')
+        }
+
     }
 }
