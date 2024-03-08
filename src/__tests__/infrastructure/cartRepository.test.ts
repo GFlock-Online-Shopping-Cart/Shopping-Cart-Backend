@@ -102,7 +102,7 @@ describe("CartRepository", () => {
             const cartDetails = {
                 cartId: 6,
                 productId: 10,
-                quantity: 20
+                quantity: 30
             }
 
             const mockFindOneBy = jest.fn().mockResolvedValue({
@@ -129,9 +129,9 @@ describe("CartRepository", () => {
                 save: mockSave
             });
 
-            await cartRepository.modifyCart(cartDetails);
+            const result = await cartRepository.modifyCart(cartDetails);
 
-            expect(myDataSource.getRepository).toHaveBeenCalledWith(CartItem);
+            expect(result).toEqual(cartDetails);
         });
     });
 })
