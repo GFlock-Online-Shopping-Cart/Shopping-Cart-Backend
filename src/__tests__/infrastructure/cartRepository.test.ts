@@ -7,6 +7,7 @@ jest.mock("../../config/dataSource");
 describe("CartRepository", () => {
     let cartRepository: CartRepository;
     
+    
     beforeAll(() => {
         cartRepository = new CartRepository();
     });
@@ -89,6 +90,48 @@ describe("CartRepository", () => {
 
             expect(myDataSource.getRepository).toHaveBeenCalledWith(CartItem);
             expect(result).toBe("Cart item removed successfully.")
+        });
+    });
+
+    describe("modifyCart", () => {
+        it("should modify the cart item entity for given cartId and productId", async () => {
+            const cartId = 6;
+            const productId = 10;
+            const quantity = 20;
+
+            const cartDetails = {
+                cartId: 6,
+                productId: 10,
+                quantity: 20
+            }
+
+            const mockFindOneBy = jest.fn().mockResolvedValue({
+                cartId: cartId,
+                productId: productId,
+                quantity: quantity
+            });
+
+            const mockMerge = jest.fn().mockResolvedValue({
+                cartId: cartId,
+                productId: productId,
+                quantity: 30
+            });
+
+            const mockSave = jest.fn().mockResolvedValue({
+                cartId: cartId,
+                productId: productId,
+                quantity: 30
+            });
+
+            myDataSource.getRepository = jest.fn().mockReturnValue({
+                findOneBy: mockFindOneBy,
+                merge: mockMerge,
+                save: mockSave
+            });
+
+            await cartRepository.modifyCart(cartDetails);
+
+            expect(myDataSource.getRepository).toHaveBeenCalledWith(CartItem);
         });
     });
 })

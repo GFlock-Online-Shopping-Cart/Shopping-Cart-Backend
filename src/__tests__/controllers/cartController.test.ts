@@ -10,7 +10,8 @@ describe('CartController', () => {
         mockCartService = {
             addToCartProduct: jest.fn(),
             viewCart: jest.fn(),
-            removeProductFromCart: jest.fn()
+            removeProductFromCart: jest.fn(),
+            updateCart: jest.fn()
         } as unknown as CartService;
         cartController = new CartController(mockCartService);
     });
@@ -127,4 +128,53 @@ describe('CartController', () => {
             expect(mockNextFunction).toHaveBeenCalledWith(mockError);
         });
     });
-});
+
+    describe ("modify cart", ()=> {
+        const mockCartId = 20;
+        const mockProductId = 30;
+
+        const mockRequest = {} as Request;
+        const mockResponse = {
+            json: jest.fn(),
+            status: jest.fn().mockReturnThis(),
+        } as unknown as Response;
+
+        const mockUpdatedItem = {
+            "cartId": mockCartId,
+            "productId": mockProductId,
+            "quantity": 4
+        }
+
+        const mockNextFunction =jest.fn() as NextFunction;
+
+        it('should update the quantity for given cartId and productId', async () => {
+            (mockCartService.updateCart as jest.Mock).mockResolvedValue(mockUpdatedItem);
+            mockRequest.body = mockUpdatedItem;
+            await cartController.onModifyCart(mockRequest, mockResponse, mockNextFunction);
+            expect(mockCartService.updateCart).toHaveBeenCalled();
+            expect(mockResponse.status).toHaveBeenCalledWith(200);
+            expect(mockResponse.json).toHaveBeenCalledWith({message: "Cart is updated", data: mockUpdatedItem});
+        });
+
+        it('should handle the error when there is a bad request', async () => {
+            (mockCartService.updateCart as jest.Mock).mockResolvedValue(null);
+            try {
+                await cartController.onModifyCart(mockRequest, mockResponse, mockNextFunction);
+            } catch(error) {
+                expect(mockResponse.status).toHaveBeenCalledWith(400);
+                expect(mockResponse.json).toHaveBeenCalledWith({message: "Product item or cart not found"})
+            }
+        });
+
+        it('should handle the error while updating the product quantity', async () => {
+            const mockError = new Error('Some error occurred.');
+            (mockCartService.addToCartProduct as jest.Mock).mockRejectedValue(mockError);
+
+            await cartController.onAddToCart(mockRequest, mockResponse, mockNextFunction);
+
+            expect(mockResponse.status).toHaveBeenCalledWith(500);
+            expect(mockResponse.json).toHaveBeenCalledWith({message: "Internal server error"});
+            expect(mockNextFunction).toHaveBeenCalledWith(mockError);
+        });
+    });
+}); 
