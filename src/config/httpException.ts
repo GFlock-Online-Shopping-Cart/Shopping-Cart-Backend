@@ -1,4 +1,4 @@
-export class SubError extends Error {
+export class HTTPException extends Error {
     statusCode: number;
 
     constructor(message: string, statusCode: number) {

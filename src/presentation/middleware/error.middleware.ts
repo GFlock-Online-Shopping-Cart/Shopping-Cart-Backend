@@ -1,8 +1,8 @@
-import { SubError } from "../../config/subError";
+import { HTTPException } from "../../config/httpException";
 import { Request, Response, NextFunction } from "express";
 
 export const errorMiddleware = (
-  error: SubError,
+  error: HTTPException,
   req: Request,
   res: Response,
   next: NextFunction
