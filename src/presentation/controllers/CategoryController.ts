@@ -24,9 +24,9 @@ export class CategoryController {
     async onGetAllCategories(req: Request, res: Response, next: NextFunction) {
         try {
             const allCategories = await this.categoryService.getAllCategories()
-            res.status(200).json({messge: "Success", data: allCategories})
+            res.status(200).json({message: "Success", data: allCategories})
         } catch(err) {
-            res.status(500).json({message: "internal server error"});
+            res.status(500).json({message: "Internal server error"});
             next(err);
         }
     }
