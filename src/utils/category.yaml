@@ -1,0 +1,46 @@
+ /api/category/getCategoryById/{categoryId}:
+        get:
+          summary: show a category for given categoryId
+          description: User can view a category, details with id, categoryName for given categoryId.
+  
+          parameters:
+              - name: categoryId
+                in: path
+                required: true
+                schema: 
+                  type: number
+          tags:
+             - Category
+          responses:
+            '200':
+              description: A JSON object of id, categoryName for given categoryId.
+              content:
+                        application/json:
+                            schema: 
+                                type: object
+                                example: 
+                                  {
+                                    "message": "Success",
+                                    "data": {
+                                      "id": 1,
+                                      "categoryName": "T shirts",
+                                    }
+                                  }
+                                properties:
+                                  message:
+                                    type: string
+                                    example: "Success"
+                                  data:
+                                    type: object
+                                    properties:
+                                      id: 
+                                        type: number
+                                        example: 1
+                                      categoryName:
+                                        type: string
+                                        example: "T shirts"
+
+            '404':
+              description: "Shows the Category not found error message when the category is not in the database for given categoryId"
+            '500':
+              description: "Shows the Internal server error message when there is an error in server side"
