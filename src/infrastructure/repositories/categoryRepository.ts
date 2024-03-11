@@ -11,4 +11,9 @@ export class CategoryRepository implements ICategoryRepository {
         })       
         return category ?? undefined
     }
+
+    async getAllCategories(): Promise<Category[]> {
+        const allCategories = await myDataSource.getRepository(Category).find()
+        return allCategories;   
+    }
 }

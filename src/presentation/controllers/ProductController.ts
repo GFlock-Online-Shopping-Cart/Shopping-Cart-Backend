@@ -8,7 +8,6 @@ export class ProductController {
 
     async onGetAllProducts(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log(this.productService);
             const allProducts = await this.productService.getAllProducts()
             res.status(200).json({message: "success", data: allProducts})
         } catch(err) {            

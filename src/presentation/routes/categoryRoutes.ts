@@ -6,5 +6,6 @@ const router = Router();
 
 const categoryController = Container.get(CategoryController)
 
-router.get("/getCategoryById/:categoryId", categoryController.onGetCategoryById.bind(categoryController))
+router.get("/getCategoryById/:categoryId", categoryController.onGetCategoryById.bind(categoryController));
+router.get("/getAllCategories", categoryController.onGetAllCategories.bind(categoryController));
 export default router;

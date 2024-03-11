@@ -20,4 +20,14 @@ export class CategoryController {
             next(err);
         }
     }
+
+    async onGetAllCategories(req: Request, res: Response, next: NextFunction) {
+        try {
+            const allCategories = await this.categoryService.getAllCategories()
+            res.status(200).json({messge: "Success", data: allCategories})
+        } catch(err) {
+            res.status(500).json({message: "internal server error"});
+            next(err);
+        }
+    }
 }
