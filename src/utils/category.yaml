@@ -1,4 +1,4 @@
- /api/category/getCategoryById/{categoryId}:
+  /api/category/getCategoryById/{categoryId}:
         get:
           summary: show a category for given categoryId
           description: User can view a category, details with id, categoryName for given categoryId.
@@ -44,3 +44,45 @@
               description: "Shows the Category not found error message when the category is not in the database for given categoryId"
             '500':
               description: "Shows the Internal server error message when there is an error in server side"
+
+  /api/category/getAllCategories:
+        get:
+          summary: Shows all categories to the user.
+          description: User can view all the categories, details with categoryId, category name. If there occurrs an error in server side user can view the error message like Internal server error. 
+          tags:
+           - Category
+          responses:
+              '200':
+                  description: A JSON object of id, categoryName.
+                  content:
+                      application/json:
+                          schema: 
+                              type: object
+                              example: {
+                                "messge": "Success",
+                                "data": [
+                                  {
+                                    "id": 1,
+                                    "categoryName": "T shirt"
+                                  },
+                                  {
+                                    "id": 2,
+                                    "categoryName": "Ladies Wear"
+                                  },
+                                ]
+                              }
+                              properties:
+                                message: 
+                                  type: string
+                                  example: Success
+                                data: 
+                                  type: object
+                                  properties:
+                                    id: 
+                                      type: number
+                                      example: 1
+                                    categoryName:
+                                      type: string
+                                      example: "T shirts"
+              '500':
+                description: "Shows the Internal server error message when there is an error in server side"
