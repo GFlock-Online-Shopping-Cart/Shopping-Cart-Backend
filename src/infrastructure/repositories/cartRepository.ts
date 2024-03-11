@@ -3,6 +3,7 @@ import { myDataSource } from "../../config/dataSource";
 import { ICartRepository } from "../../domain/cartRepository"; 
 import { CartItem } from "../../domain/entities/cartItem";
 import { Product } from "../../domain/entities/product";
+import { SubError } from "../../config/subError";
 
 @Service()
 export class CartRepository implements ICartRepository {
@@ -64,7 +65,7 @@ export class CartRepository implements ICartRepository {
             const results = await myDataSource.getRepository(CartItem).save(cartItem);
             return results;
         } else {
-            throw new Error('Cart item not found')
+            throw new SubError("Cart item not found", 404);
         }
 
     }
