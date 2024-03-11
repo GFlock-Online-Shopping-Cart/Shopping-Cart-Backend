@@ -34,11 +34,11 @@ export class CartController {
     async onRemoveProductFromCart(req: Request, res: Response, next: NextFunction) {
         const productId = Number(req.params.productId);
         const cartId = Number(req.params.cartId)
-        const removedItem = await this.cartItemService.removeProductFromCart(cartId, productId)
         try {
+            const removedItem = await this.cartItemService.removeProductFromCart(cartId, productId)
             res.status(200).json({message: "Successfully Removed", data: removedItem})
         } catch(err) {
-            res.status(500).json({message: "Internal server error"})
+            next(err);
         }
     }
 

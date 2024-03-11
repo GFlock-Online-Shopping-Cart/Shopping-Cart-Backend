@@ -41,7 +41,7 @@ export class CartRepository implements ICartRepository {
             },
         });
         if (!itemToRemove) {
-            throw new SubError('Product not found in cart', 404);
+            throw new SubError('Cart item not found in the cart', 404);
         } else {
             await cartRepository.delete(itemToRemove);
             return ("Cart item removed successfully.")
