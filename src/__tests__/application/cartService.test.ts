@@ -10,6 +10,8 @@ describe('CartService', () => {
             addToCartProduct: jest.fn(),
             viewCart: jest.fn(),
             removeProductFromCart: jest.fn(),
+            modifyCart: jest.fn()
+            
         } as unknown as CartRepository;
 
         cartService = new CartService(mockCartRepository);
@@ -53,5 +55,20 @@ describe('CartService', () => {
 
         await cartService.removeProductFromCart(cartId, productId);
         expect(mockCartRepository.removeProductFromCart).toHaveBeenCalledWith(cartId, productId)
+    });
+
+    describe('modify cart', () => {
+        it('should update the cart item quantity', async() => {
+            const cartDetails = {
+                "cartId": 6,
+                "productId": 3,
+                "quantity": 2
+            } as any;
+            (mockCartRepository.modifyCart as jest.Mock).mockResolvedValue(cartDetails);
+            await cartService.updateCart(cartDetails);
+
+            expect(mockCartRepository.addToCartProduct).toHaveBeenCalled();
+        })
+        
     })
 });
