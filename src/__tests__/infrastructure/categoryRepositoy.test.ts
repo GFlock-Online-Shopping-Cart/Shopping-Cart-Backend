@@ -72,4 +72,40 @@ describe("CategoryRepository", () => {
       expect(result).toHaveLength(3);
     });
   });
+
+  describe("getProductsByCategoryId", () => {
+    it('should return all products for given categoryId', async () => {
+      const categoryId = 10;
+      const mockFindOneBy = jest.fn().mockResolvedValue(categoryId);
+      const mockSelect = jest.fn().mockResolvedValue([
+        {
+          "category_id": categoryId,
+          "category_categoryName": "T shirt",
+          "product_productName": "Moose Tshirt"
+        },
+        {
+          "category_id": categoryId,
+          "category_categoryName": "T shirt",
+          "product_productName": "Uptown Tshirt"
+        },
+      ]);
+      myDataSource.getRepository = jest.fn().mockReturnValue({
+        findOneBy: mockFindOneBy
+      });
+      
+      
+      (myDataSource.createQueryBuilder as jest.Mock).mockReturnValue({
+        innerJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        select: jest.fn().mockReturnThis(),
+        getRawMany: jest.fn().mockResolvedValue(mockSelect)
+      });
+      // mockReturnThis() is used to return the current context, allowing to chain function calls. The final function in the chain (getRawMany) is mocked to return mockSelect value
+     
+      const result = await categoryRepository.getProductsByCategoryId(categoryId);
+
+      expect(result).toEqual(mockSelect);
+      expect(myDataSource.createQueryBuilder).toHaveBeenCalledTimes(1)
+    })
+  })
 });

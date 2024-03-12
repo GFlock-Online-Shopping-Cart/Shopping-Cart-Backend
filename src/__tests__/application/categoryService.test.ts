@@ -8,7 +8,8 @@ describe("CategoryService", () => {
   beforeAll(() => {
     mockCategoryRepository = {
       getCategoryById: jest.fn(),
-      getAllCategories: jest.fn()
+      getAllCategories: jest.fn(),
+      getProductsByCategoryId: jest.fn(),
     } as unknown as CategoryRepository;
 
     categoryService = new CategoryService(mockCategoryRepository);
@@ -51,6 +52,28 @@ describe("CategoryService", () => {
       const result = await categoryService.getAllCategories();
       expect(mockCategoryRepository.getAllCategories).toHaveBeenCalled();
       expect(result).toHaveLength(3);
+    });
+  });
+
+  describe("getProductsByCategoryId", () => {
+    const categoryId = 10;
+    it("should return all products for given categoryId", async () => {(
+      mockCategoryRepository.getProductsByCategoryId as jest.Mock
+      ).mockResolvedValue([
+        {
+          category_id: categoryId,
+          category_categoryName: "T shirt",
+          product_productName: "Moose Tshirt",
+        },
+        {
+          category_id: categoryId,
+          category_categoryName: "T shirt",
+          product_productName: "Uptown Tshirt",
+        },
+      ]);
+
+      await categoryService.getProductsByCategoryId(categoryId);
+      expect(mockCategoryRepository.getProductsByCategoryId).toHaveBeenCalledWith(categoryId);
     });
   });
 });
