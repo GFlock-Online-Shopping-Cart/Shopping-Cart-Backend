@@ -1,4 +1,5 @@
 import { myDataSource } from "../../config/dataSource";
+import { HTTPException } from "../../config/httpException";
 import { Category } from "../../domain/entities/category";
 import { CategoryRepository } from "../../infrastructure/repositories/categoryRepository";
 
@@ -106,6 +107,25 @@ describe("CategoryRepository", () => {
 
       expect(result).toEqual(mockSelect);
       expect(myDataSource.createQueryBuilder).toHaveBeenCalledTimes(1)
+    });
+
+    it('should handle the error when the categoryId is not exist', async () => {
+      const nonExistingCategoryId = 100;
+      const mockFindOneBy = jest.fn().mockResolvedValue(undefined);
+
+      myDataSource.getRepository = jest.fn().mockReturnValue({
+        findOneBy: mockFindOneBy
+      });
+
+      try {
+        await categoryRepository.getProductsByCategoryId(nonExistingCategoryId);
+      } catch(error: any) {
+        expect(error).toBeInstanceOf(HTTPException);
+        expect(error.message).toEqual("Category is not found");
+        expect(error.statusCode).toEqual(404);
+      }
+      
+      
     })
   })
 });
