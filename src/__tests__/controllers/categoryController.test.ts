@@ -10,6 +10,7 @@ describe("CategoryController", () => {
     mockCategoryService = {
       getCategoryById: jest.fn(),
       getAllCategories: jest.fn(),
+      getProductsByCategoryId: jest.fn(),
     } as unknown as CategoryService;
 
     categoryController = new CategoryController(mockCategoryService);
@@ -145,5 +146,47 @@ describe("CategoryController", () => {
       });
       expect(mockNextFunction).toHaveBeenCalledWith(mockError);
     });
+  });
+
+  describe("getProductsByCategoryId", () => {
+    const categoryId = 10;
+    const mockRequest = {} as Request;
+    const mockResponse = {
+      json: jest.fn(),
+      status: jest.fn().mockReturnThis(),
+    } as unknown as Response;
+    const mockNextFunction = jest.fn() as NextFunction;
+
+    const mockProducts = [
+      {
+        "category_id": categoryId,
+        "category_categoryName": "T shirt",
+        "product_productName": "Moose Tshirt",
+      },
+      {
+        "category_id": categoryId,
+        "category_categoryName": "T shirt",
+        "product_productName": "Uptown Tshirt",
+      },
+    ];
+
+    it('should get the products for given categoryId', async() => {
+      (mockCategoryService.getProductsByCategoryId as jest.Mock).mockResolvedValue(mockProducts);
+      mockRequest.params = {categoryId} as any;
+      await categoryController.onGetProductsByCategoryId(mockRequest, mockResponse, mockNextFunction);
+
+      expect(mockCategoryService.getProductsByCategoryId).toHaveBeenCalled();
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({message: "Success", data: mockProducts})
+    });
+
+    it('should handle the error while getting the products by categoryId', async() => {
+      const mockError = new Error('Some error occurred');
+      (mockCategoryService.getProductsByCategoryId as jest.Mock).mockRejectedValue(mockError);
+
+      await categoryController.onGetProductsByCategoryId(mockRequest, mockResponse, mockNextFunction);
+
+      expect(mockNextFunction).toHaveBeenCalledWith(mockError);
+    })
   });
 });
