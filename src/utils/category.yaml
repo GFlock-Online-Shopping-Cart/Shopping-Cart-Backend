@@ -86,3 +86,55 @@
                                       example: "T shirts"
               '500':
                 description: "Shows the Internal server error message when there is an error in server side"
+
+  /api/category/getProductsByCategoryId/{categoryId}:
+        get:
+          summary: Shows all products for given category.
+          description: User can view all the products details with categoryId, categoryName and productName for given category. If the categoryId does not exist in the database it will occurres an error like categoryId is not found.
+          parameters:
+              - name: categoryId
+                in: path
+                required: true
+                schema: 
+                  type: number 
+          tags:
+           - Category
+          responses:
+              '200':
+                  description: A JSON object of categoryId, categoryName and productName.
+                  content:
+                      application/json:
+                          schema: 
+                              type: object
+                              example: {
+                                "message": "Success",
+                                "data": [
+                                  {
+                                    "category_id": 1,
+                                    "category_categoryName": "T shirt",
+                                    "product_productName": "Moose Tshirt"
+                                  },
+                                  {
+                                    "category_id": 1,
+                                    "category_categoryName": "T shirt",
+                                    "product_productName": "Uptown Tshirt"
+                                  },
+                                ]}
+                              properties:
+                                message: 
+                                  type: string
+                                  example: Success
+                                data: 
+                                  type: object
+                                  properties:
+                                    category_id: 
+                                      type: number
+                                      example: 1
+                                    category_categoryName:
+                                      type: string
+                                      example: "T shirts"
+                                    product_productName: 
+                                      type: string
+                                      example: "Moose Tshirt"
+              '404':
+                description: "Shows the Category is not found error message when the categoryId does not exist in the database"
