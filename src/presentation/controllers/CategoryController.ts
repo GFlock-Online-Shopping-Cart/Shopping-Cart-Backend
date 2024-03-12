@@ -30,4 +30,14 @@ export class CategoryController {
             next(err);
         }
     }
+
+    async onGetProductsByCategoryId(req: Request, res: Response, next: NextFunction) {
+        try {
+            const categoryId = Number(req.params.categoryId);
+            const categoryProducts = await this.categoryService.getProductsByCategoryId(categoryId);
+            res.status(200).json({message: "Success", data: categoryProducts})
+        } catch(err) {
+            next(err);
+        }
+    }
 }
