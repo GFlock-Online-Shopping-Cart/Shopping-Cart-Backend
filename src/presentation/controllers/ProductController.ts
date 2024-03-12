@@ -8,12 +8,9 @@ export class ProductController {
 
     async onGetAllProducts(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log(this.productService);
             const allProducts = await this.productService.getAllProducts()
             res.status(200).json({message: "success", data: allProducts})
-        } catch(err) {
-            console.error("Error in onGetAllProducts:", err);
-            
+        } catch(err) {            
             res.status(500).json({message: "Internal server error"})
             next(err);
         }

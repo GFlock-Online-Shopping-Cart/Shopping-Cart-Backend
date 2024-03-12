@@ -8,6 +8,8 @@ import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
 import productRouter from "./routes/productRoutes";
 import cartItemRouter from "./routes/cartRoutes";
+import categoryRouter from "./routes/categoryRoutes";
+
 import { errorMiddleware } from "./middleware/error.middleware";
 
 const cors = require("cors");
@@ -18,9 +20,10 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
-app.use("/api/user", userRouter);
+app.use("/api/user", userRouter); 
 app.use("/api/product", productRouter);
 app.use("/api/cart", cartItemRouter);
+app.use("/api/category", categoryRouter);
 
 app.use(errorMiddleware);
 
