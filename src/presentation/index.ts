@@ -12,6 +12,7 @@ import categoryRouter from "./routes/categoryRoutes";
 
 import { errorMiddleware } from "./middleware/error.middleware";
 
+
 const cors = require("cors");
 const app = express();
 
