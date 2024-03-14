@@ -20,22 +20,21 @@ export class CategoryRepository implements ICategoryRepository {
     }
 
     async getProductsByCategoryId(categoryId: number): Promise<Product[] | null> {
-
-        const category = await myDataSource.getRepository(Category).findOneBy({
-            id: categoryId
-        });
-        
-        if(!category) {
-            throw new HTTPException('Category is not found', 404);
-        } 
-        const categoryProducts = await myDataSource
-        .createQueryBuilder(Category, "category")
-        .innerJoinAndSelect(Product, "product", "category.id = product.categoriesId")
-        .where("category.id = :categoryId", {categoryId})
-        .select(["category.id", "category.categoryName", "product.productName"])
-        .getRawMany();
-
-        return categoryProducts;
-        
+        try {
+            await myDataSource.getRepository(Category).findOneOrFail({
+                where: {
+                    id: categoryId
+                }
+            });
+            const categoryProducts = await myDataSource
+            .createQueryBuilder(Category, "category")
+            .innerJoinAndSelect(Product, "product", "category.id = product.categoriesId")
+            .where("category.id = :categoryId", {categoryId})
+            .select(["category.id", "category.categoryName", "product.productName"])
+            .getRawMany();
+            return categoryProducts;
+        } catch (error) {
+            throw new HTTPException('Category is not found', 404)
+        }  
     }
 }
