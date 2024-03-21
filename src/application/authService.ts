@@ -4,9 +4,14 @@ import { UserRepository } from "../infrastructure/repositories/userReporitory";
 
 @Service()
 export class AuthService {
-    constructor(private readonly userRepository: UserRepository) {}
-
+    constructor(
+        private readonly userRepository: UserRepository, 
+    ) {}
     async createUser(userDetails: any): Promise<User> {
-        return await this.userRepository.createUser(userDetails);
+        try {
+            return await this.userRepository.createUser(userDetails);
+        } catch (error) {
+            throw error
+        }
     }
 }

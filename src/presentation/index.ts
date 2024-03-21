@@ -1,4 +1,8 @@
 import "reflect-metadata";
+
+import dotenv from "dotenv";
+dotenv.config();
+
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 import express from "express";
@@ -19,11 +23,18 @@ app.use(cors());
 // JSON body-parser middleware
 app.use(express.json());
 
+
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter); 
 app.use("/api/product", productRouter);
 app.use("/api/cart", cartItemRouter);
 app.use("/api/category", categoryRouter);
+
+// app.get("/api/private", jwtCheck, jwtDecode, (req: IRequest, res, next) => {
+  
+//   console.log(req.user?.id)
+//   res.status(200).json({message: "Access Granted!"});
+// })
 
 app.use(errorMiddleware);
 

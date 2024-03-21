@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index, OneToMany } from "typeorm"; 
+import { Entity, PrimaryColumn, Column, Index, OneToMany } from "typeorm"; 
 import { Checkout } from "./checkout";
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryColumn({type: "varchar"})
+    id: string;
     
     @Column()
     firstName: string;

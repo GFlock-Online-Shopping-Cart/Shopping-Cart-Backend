@@ -12,7 +12,7 @@ export class UserController {
     }
 
     async onGetUserById(req: Request, res: Response, next: NextFunction) {
-        const userId = Number(req.params.userId);
+        const userId = req.params.userId;
         const user = await this.userService.getUserById(userId);
         res.status(200).json({message: "success", data: user});
 

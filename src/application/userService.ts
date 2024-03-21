@@ -10,7 +10,7 @@ export class UserService {
         return await this.userRepository.getAllUsers();
     }
 
-    async getUserById(userId: number): Promise<User | undefined> {
+    async getUserById(userId: string): Promise<User | undefined> {
         return await this.userRepository.getUserById(userId);
     }
 }
