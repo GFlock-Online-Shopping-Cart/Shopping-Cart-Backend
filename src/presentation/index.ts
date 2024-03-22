@@ -15,6 +15,7 @@ import cartItemRouter from "./routes/cartRoutes";
 import categoryRouter from "./routes/categoryRoutes";
 
 import { errorMiddleware } from "./middleware/error.middleware";
+import { validateAccessToken } from "./middleware/auth.middleware";
 
 const cors = require("cors");
 const app = express();
@@ -27,14 +28,8 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter); 
 app.use("/api/product", productRouter);
-app.use("/api/cart", cartItemRouter);
+app.use("/api/cart", validateAccessToken, cartItemRouter);
 app.use("/api/category", categoryRouter);
-
-// app.get("/api/private", jwtCheck, jwtDecode, (req: IRequest, res, next) => {
-  
-//   console.log(req.user?.id)
-//   res.status(200).json({message: "Access Granted!"});
-// })
 
 app.use(errorMiddleware);
 
@@ -55,6 +50,9 @@ const options = {
       title: "Shopping Cart API",
       version: "1.0.0",
       description: "Shopping Cart Backend",
+      security: [{
+        bearerAuth: []
+      }]
     },
   },
   apis: ["./src/utils/*.yaml"], 
