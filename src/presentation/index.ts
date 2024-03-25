@@ -1,4 +1,8 @@
 import "reflect-metadata";
+
+import dotenv from "dotenv";
+dotenv.config();
+
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 import express from "express";
@@ -11,6 +15,7 @@ import cartItemRouter from "./routes/cartRoutes";
 import categoryRouter from "./routes/categoryRoutes";
 
 import { errorMiddleware } from "./middleware/error.middleware";
+import { decodeIdToken, validateAccessToken } from "./middleware/auth.middleware";
 
 
 const cors = require("cors");
@@ -20,10 +25,11 @@ app.use(cors());
 // JSON body-parser middleware
 app.use(express.json());
 
+
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter); 
 app.use("/api/product", productRouter);
-app.use("/api/cart", cartItemRouter);
+app.use("/api/cart", validateAccessToken, decodeIdToken, cartItemRouter);
 app.use("/api/category", categoryRouter);
 
 app.use(errorMiddleware);
@@ -45,6 +51,9 @@ const options = {
       title: "Shopping Cart API",
       version: "1.0.0",
       description: "Shopping Cart Backend",
+      security: [{
+        bearerAuth: []
+      }]
     },
   },
   apis: ["./src/utils/*.yaml"], 

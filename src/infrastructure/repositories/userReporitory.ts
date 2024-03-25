@@ -10,7 +10,7 @@ export class UserRepository implements IUserRepository {
         return allUsers;
     }
 
-    async getUserById(userId: number): Promise<User | undefined> {
+    async getUserById(userId: string): Promise<User | undefined> {
         const user = await myDataSource.getRepository(User).findOneBy({
             id: userId
         })
@@ -18,9 +18,10 @@ export class UserRepository implements IUserRepository {
     }
 
     async createUser(userDetails: any): Promise<User> {
-        const {firstName, lastName, emailAddress, mobileNumber, streetAddress, city, province} = userDetails;
+        const {id, firstName, lastName, emailAddress, mobileNumber, streetAddress, city, province} = userDetails;
         
         const newUser = new User();
+        newUser.id = id;
         newUser.firstName = firstName;
         newUser.lastName = lastName;
         newUser.emailAddress = emailAddress;
