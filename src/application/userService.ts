@@ -6,7 +6,7 @@ import { UserRepository } from "../infrastructure/repositories/userReporitory";
 export class UserService {
     constructor(private readonly userRepository: UserRepository) {}
 
-    async createUser(userDetails: any, userId: string): Promise<User> {
+    async createProfile(userDetails: any, userId: string): Promise<User> {
         try {
             return await this.userRepository.createUser(userDetails, userId);
         } catch (error) {

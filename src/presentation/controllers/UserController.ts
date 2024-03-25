@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import { UserService } from '../../application/userService'; 
 import { Service } from 'typedi';
 import { IRequest } from '../../interfaces/IRequest';
@@ -13,8 +13,8 @@ export class UserController {
     
         try {
             if (userId) {
-                const createdUser = await this.userService.createUser(body, userId);
-                res.status(200).json({ message: "User created successfully", data: createdUser });
+                const createdUser = await this.userService.createProfile(body, userId);
+                res.status(200).json({ message: "Profile created successfully", data: createdUser });
             } else {
                 res.status(401).json({ message: "Unauthorized" })
             }
