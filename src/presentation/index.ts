@@ -8,8 +8,7 @@ import swaggerJsDoc from "swagger-jsdoc";
 import express from "express";
 import { myDataSource } from "../config/dataSource";
 
-import authRouter from "./routes/authRoutes";
-import userRouter from "./routes/userRoutes";
+import userRouter from "./routes/userRoutes"
 import productRouter from "./routes/productRoutes";
 import cartItemRouter from "./routes/cartRoutes";
 import categoryRouter from "./routes/categoryRoutes";
@@ -25,7 +24,6 @@ app.use(cors());
 app.use(express.json());
 
 
-app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter); 
 app.use("/api/product", productRouter);
 app.use("/api/cart", validateAccessToken, decodeIdToken, cartItemRouter);

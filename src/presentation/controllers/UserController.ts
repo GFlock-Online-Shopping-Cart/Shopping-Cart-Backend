@@ -1,20 +1,27 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '../../application/userService'; 
 import { Service } from 'typedi';
+import { IRequest } from '../../interfaces/IRequest';
 
 @Service()
 export class UserController {
     constructor(private userService: UserService) {}
 
-    async onGetAllUsers(req: Request, res:Response, next: NextFunction) {
-        const allUsers = await this.userService.getAllUsers()
-        res.status(200).json({message: "success", data: allUsers});
-    }
-
-    async onGetUserById(req: Request, res: Response, next: NextFunction) {
-        const userId = req.params.userId;
-        const user = await this.userService.getUserById(userId);
-        res.status(200).json({message: "success", data: user});
-
-    }
+    async onCreateProfile(req: IRequest, res: Response, next: NextFunction) {
+        const body = req.body;
+        const userId = req.user?.id;
+    
+        try {
+            if (userId) {
+                const createdUser = await this.userService.createUser(body, userId);
+                res.status(200).json({ message: "User created successfully", data: createdUser });
+            } else {
+                res.status(401).json({ message: "Unauthorized" })
+            }
+        } catch (err: any) {
+          console.log(err.response);
+          next(err);
+        }
+        // validate inputs
+      }
 }
