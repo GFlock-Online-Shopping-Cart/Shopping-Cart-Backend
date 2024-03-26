@@ -1,6 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { CartController } from "../../presentation/controllers/CartController";
 import { CartService } from "../../application/cartService";
+import { IRequest } from "../../interfaces/IRequest";
 
 describe('CartController', () => {
     let cartController: CartController;
@@ -22,7 +23,10 @@ describe('CartController', () => {
             "productId" : 3,
             "quantity" : 2
         }
-        const mockRequest = {} as Request;
+        const mockRequest = {
+            user: { id: '65f96fe4b5f2a27b70cf022' },
+            body: {}
+        } as unknown as IRequest;
         const mockResponse = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
@@ -56,7 +60,10 @@ describe('CartController', () => {
 
     describe("onViewCart", () => {
         const cartId = 1;
-        const mockRequest = {} as Request;
+        const mockRequest = {
+            user: { id: '65f96fe4b5f2a27b70cf022' },
+            body: {}
+        } as unknown as IRequest;
         const mockResponse = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
@@ -98,7 +105,10 @@ describe('CartController', () => {
         const mockCartId = 6;
         const mockProductId = 3;
 
-        const mockRequest = {} as Request;
+        const mockRequest = {
+            user: { id: '65f96fe4b5f2a27b70cf022' },
+            body: {}
+        } as unknown as IRequest;
         const mockResponse = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
@@ -133,7 +143,10 @@ describe('CartController', () => {
         const mockCartId = 20;
         const mockProductId = 30;
 
-        const mockRequest = {} as Request;
+        const mockRequest = {
+            user: { id: '65f96fe4b5f2a27b70cf022' },
+            body: {}
+        } as unknown as IRequest;
         const mockResponse = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
