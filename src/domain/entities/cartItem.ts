@@ -1,18 +1,14 @@
-import { Entity, Column, ManyToOne, PrimaryColumn } from "typeorm"; 
-import { Cart } from "./cart"; 
+import { Entity, Column, ManyToOne, PrimaryColumn } from "typeorm";  
 
 @Entity()
 export class CartItem {
 
-    @PrimaryColumn()
-    cartId: number;
+    @PrimaryColumn({type: "varchar"})
+    userId: string;
 
     @PrimaryColumn()
     productId: number;
 
     @Column()
     quantity: number;
-
-    @ManyToOne(() => Cart, cart => cart.cartItems)
-    cart: Cart;
 }
