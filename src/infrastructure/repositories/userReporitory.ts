@@ -6,7 +6,7 @@ import { IUserRepository } from "../../domain/userRepository";
 @Service()
 export class UserRepository implements IUserRepository {
 
-    async createUser(userDetails: any, userId: string): Promise<User> { 
+    async createProfile(userDetails: any, userId: string): Promise<User> { 
         const { firstName, lastName, mobileNumber, streetAddress, city, province } = userDetails;
         
         const newUser = new User();

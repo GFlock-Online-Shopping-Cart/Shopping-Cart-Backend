@@ -8,7 +8,7 @@ export class UserService {
 
     async createProfile(userDetails: any, userId: string): Promise<User> {
         try {
-            return await this.userRepository.createUser(userDetails, userId);
+            return await this.userRepository.createProfile(userDetails, userId);
         } catch (error) {
             throw error
         }
