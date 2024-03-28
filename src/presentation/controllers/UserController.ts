@@ -19,7 +19,6 @@ export class UserController {
                 res.status(401).json({ message: "Unauthorized" })
             }
         } catch (err: any) {
-          console.log(err.response);
           next(err);
         }
         // validate inputs
