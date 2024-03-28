@@ -12,6 +12,7 @@ import userRouter from "./routes/userRoutes"
 import productRouter from "./routes/productRoutes";
 import cartItemRouter from "./routes/cartRoutes";
 import categoryRouter from "./routes/categoryRoutes";
+import checkoutRouter from "./routes/checkoutRoutes"
 
 import { errorMiddleware } from "./middleware/error.middleware";
 import { decodeIdToken, validateAccessToken } from "./middleware/auth.middleware";
@@ -28,6 +29,7 @@ app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
 app.use("/api/cart", validateAccessToken, decodeIdToken, cartItemRouter);
 app.use("/api/category", categoryRouter);
+app.use("/api/checkout", validateAccessToken, decodeIdToken, checkoutRouter);
 
 app.use(errorMiddleware);
 

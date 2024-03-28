@@ -19,13 +19,21 @@ export class CartRepository implements ICartRepository {
         return result;
     }
 
-    async viewCart(userId: string): Promise<Product[]> {
-        const viewCartItems = await myDataSource
-        .createQueryBuilder(CartItem, "cart_item")
-        .innerJoinAndSelect(Product, "product", "cart_item.productId = product.id")
-        .where("cart_item.userId = :userId", {userId})
-        .select(["cart_item.userId", "cart_item.productId", "cart_item.quantity", "product.productName", "product.productImage", "product.price"])
-        .getRawMany();
+    async viewCart(userId: string): Promise<CartItem[]> {
+        // const viewCartItems = await myDataSource
+        // .createQueryBuilder(CartItem, "cart_item")
+        // .innerJoinAndSelect(Product, "product", "cart_item.productId = product.id")
+        // .where("cart_item.userId = :userId", {userId})
+        // .select(["cart_item.userId", "cart_item.productId", "cart_item.quantity", "product.productName", "product.productImage", "product.price"])
+        // .getRawMany();
+
+        const viewCartItems = await myDataSource.getRepository(CartItem)
+                                        .find({
+                                            where: {userId},
+                                            relations: {
+                                                product: true
+                                            }
+                                        })
     
         return viewCartItems;
     }
@@ -68,5 +76,13 @@ export class CartRepository implements ICartRepository {
             throw new HTTPException("Cart item not found", 404);
         }
 
+    }
+
+    async removeAllCartItems(userId: string): Promise<[]> {
+        const cartRepository = myDataSource.getRepository(CartItem);
+        await cartRepository.delete({
+            userId
+        })    
+        return [];
     }
 }
