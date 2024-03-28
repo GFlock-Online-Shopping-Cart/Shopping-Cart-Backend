@@ -11,7 +11,6 @@ export class CheckoutService {
   ) {}
 
   async ceateCheckout(userId: string): Promise<Checkout> {
-    try {
       const cartItems = await this.cartRepository.viewCart(userId);
 
       const checkoutItems = cartItems.map((item) => ({
@@ -29,6 +28,8 @@ export class CheckoutService {
       newCheckout.checkoutItems = checkoutItems as any;
       newCheckout.checkoutPrice = checkoutPrice;
       newCheckout.userId = userId;
+
+
       const checkout = await this.checkoutRepository.createCheckout(
         newCheckout
       );
@@ -37,8 +38,5 @@ export class CheckoutService {
       await this.cartRepository.removeAllCartItems(userId)
 
       return checkout;
-    } catch (error) {
-      throw error;
-    }
   }
 }

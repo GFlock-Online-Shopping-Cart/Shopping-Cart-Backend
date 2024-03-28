@@ -33,39 +33,28 @@ describe("CartRepository", () => {
     describe("viewCart", () => {
         it("should return the cart for given cartId", async () => {
             const userId = "65f96fe4b5f2a27b70cf022";
-            const mockSelect = jest.fn().mockResolvedValue([
+            const mockCartItems = [
                 {
-                    "cart_item_userId": userId,
-                    "cart_item_productId": 1,
-                    "cart_item_quantity": 2,
-                    "product_productName": "Moose Tshirt",
-                    "product_productImage": "moose.jpg",
-                    "product_price": "990"
-                }, 
-                {
-                    "cart_item_userId": userId,
-                    "cart_item_productId": 2,
-                    "cart_item_quantity": 2,
-                    "product_productName": "Uptown Tshirt",
-                    "product_productImage": "uptown.jpg",
-                    "product_price": "1290"
-                } 
-            ]
-            );
+                    "productId": 1, 
+                    "quantity": 5, 
+                    "userId": userId,
+                    "product": {
+                        "id": 1, 
+                        "productName": "Moose Tshirt",
+                        "description": "S, M, L sizes are available", 
+                        "productImage": "moose.jpg", 
+                        "price": "1000", 
+                    }, 
+                }];
 
-            (myDataSource.createQueryBuilder as jest.Mock).mockReturnValueOnce({
-                innerJoinAndSelect: jest.fn().mockReturnValueOnce({
-                    where: jest.fn().mockReturnValueOnce({
-                        select: jest.fn().mockReturnValueOnce({
-                            getRawMany: jest.fn().mockResolvedValueOnce(mockSelect)
-                        })
-                    })
-                }) 
+            const mockFind = jest.fn().mockResolvedValue(mockCartItems);
+
+            myDataSource.getRepository = jest.fn().mockReturnValue({
+                find: mockFind,
             })
             const result = await cartRepository.viewCart(userId);
 
-            expect(result).toEqual(mockSelect);
-            expect(myDataSource.createQueryBuilder).toHaveBeenCalledTimes(1);
+            expect(result).toEqual(mockCartItems);
         });
     });
 
