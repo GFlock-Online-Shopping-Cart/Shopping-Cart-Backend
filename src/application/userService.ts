@@ -6,11 +6,11 @@ import { UserRepository } from "../infrastructure/repositories/userReporitory";
 export class UserService {
     constructor(private readonly userRepository: UserRepository) {}
 
-    async getAllUsers(): Promise<User[]> {
-        return await this.userRepository.getAllUsers();
-    }
-
-    async getUserById(userId: string): Promise<User | undefined> {
-        return await this.userRepository.getUserById(userId);
+    async createProfile(userDetails: any, userId: string): Promise<User> {
+        try {
+            return await this.userRepository.createProfile(userDetails, userId);
+        } catch (error) {
+            throw error
+        }
     }
 }

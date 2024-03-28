@@ -7,19 +7,19 @@ import { CartRepository } from "../infrastructure/repositories/cartRepository";
 export class CartService {
     constructor(private readonly cartRepository: CartRepository) {}
 
-    async addToCartProduct(cartDetails: any): Promise<CartItem> {
-        return await this.cartRepository.addToCartProduct(cartDetails);
+    async addToCartProduct(cartDetails: any, userId: string): Promise<CartItem> {
+        return await this.cartRepository.addToCartProduct(cartDetails, userId);
     }
 
-    async viewCart(cartId: number): Promise<Product[]> {
-        return await this.cartRepository.viewCart(cartId);
+    async viewCart(userId: string): Promise<Product[]> {
+        return await this.cartRepository.viewCart(userId);
     }
 
-    async removeProductFromCart(cartId: number, productId: number): Promise<string> {
-        return await this.cartRepository.removeProductFromCart(cartId, productId)
+    async removeProductFromCart(userId: string, productId: number): Promise<string> {
+        return await this.cartRepository.removeProductFromCart(userId, productId)
     }
 
-    async updateCart(cartDetails: any): Promise<CartItem> {
-        return await this.cartRepository.modifyCart(cartDetails)
+    async updateCart(cartDetails: any, userId: string): Promise<CartItem> {
+        return await this.cartRepository.modifyCart(cartDetails, userId)
     }
 }

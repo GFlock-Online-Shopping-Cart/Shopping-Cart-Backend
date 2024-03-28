@@ -15,9 +15,6 @@ paths:
             schema:
               type: object
               properties:
-                cartId:
-                  type: number
-                  example: 6
                 productId:
                   type: number
                   example: 3
@@ -26,7 +23,7 @@ paths:
                   example: 2
       responses:
         '200':
-          description: A json object with Item added successfully message and data object with cartId, productId and quantity
+          description: A json object with Item added successfully message and data object with userId, productId and quantity
           content:
             application/json:
               schema:
@@ -34,7 +31,7 @@ paths:
                 example: {
                   "message": "Item added successfully",
                   "data": {
-                    "cartId": 6,
+                    "userId": "65f96fe4b5f2a27b70cf022d",
                     "productId": 2,
                     "quantity": 2
                   }
@@ -46,9 +43,9 @@ paths:
                   data:
                     type: object
                     properties:
-                      cartId:
-                        type: number
-                        example: 6
+                      userId:
+                        type: string
+                        example: 65f96fe4b5f2a27b70cf022d
                       productId:
                         type: number
                         example: 3
@@ -59,23 +56,17 @@ paths:
         '500':
           description: "Shows the Internal server error message when there is an error in server side"
 
-  /api/cart/view-cart/{cartId}:
+  /api/cart/view-cart:
     get:
       security:
       - bearerAuth: []
-      summary: view the cart for given cartId
-      description: User can view the cart with added cart items for given cartId
+      summary: view the cart for relevant user
+      description: User can view the cart with added cart items for relevant user
       tags:
       - Cart
-      parameters:
-              - name: cartId
-                in: path
-                required: true
-                schema: 
-                  type: number
       responses:
         '200':
-          description: A JSON object of message and data object with cart_item_cartId, cart_item_productId, cart_item_quantity, product_productName, product_productImage, product_price.
+          description: A JSON object of message and data object with cart_item_userId, cart_item_productId, cart_item_quantity, product_productName, product_productImage, product_price.
           content:
             application/json:
               schema: 
@@ -85,7 +76,7 @@ paths:
                     "message": "Successfully view the cart",
                     "data": 
                     {
-                      "cart_item_cartId": 6,
+                      "cart_item_userId": 6,
                       "cart_item_productId": 1,
                       "cart_item_quantity": 2,
                       "product_productName": "Moose Tshirt",
@@ -100,9 +91,9 @@ paths:
                   data:
                     type: object
                     properties:
-                      cart_item_cartId: 
-                        type: number
-                        example: 6
+                      cart_item_userId: 
+                        type: string
+                        example: 65f96fe4b5f2a27b70cf022d
                       cart_item_productId:
                         type: number
                         example: 1
@@ -121,20 +112,15 @@ paths:
             '500':
               description: "Shows the Internal server error message when there is an error in server side"
 
-  /api/cart/remove-product/{cartId}/{productId}:
+  /api/cart/remove-product/{productId}:
     delete:
       security:
       - bearerAuth: []
-      summary: delete a cart item from cart for given cartId and productId
-      description: User can remove a product which he no need for given cartId and the productId
+      summary: delete a cart item from cart for given productId for relevant user
+      description: User can remove a product which he no need for given productId for relevant user
       tags:
         - Cart
       parameters:
-        - name: cartId
-          in: path
-          required: true
-          schema: 
-            type: number
         - name: productId
           in: path
           required: true
@@ -142,7 +128,7 @@ paths:
             type: number
       responses:
         '200':
-          description: A JSON object of message and data object with cart_item_cartId, cart_item_productId, cart_item_quantity, product_productName, product_productImage, product_price.
+          description: A JSON object of message and data object with cart_item_userId, cart_item_productId, cart_item_quantity, product_productName, product_productImage, product_price.
           content:
             application/json:
                 schema: 
@@ -166,8 +152,8 @@ paths:
     put:
       security:
       - bearerAuth: []
-      summary: update the cart item quantity for given cartId and the productId
-      description: User can update the quantity of a cart item which he added to the cart for given cartId and the productId
+      summary: update the cart item quantity for given productId
+      description: User can update the quantity of a cart item which he added to the cart for given productId
       tags:
         - Cart
       requestBody:
@@ -177,9 +163,6 @@ paths:
             schema:
               type: object
               properties:
-                cartId:
-                  type: number
-                  example: 6
                 productId:
                   type: number
                   example: 3
@@ -197,7 +180,7 @@ paths:
                 {
                   "message": "Cart is updated",
                   "data": {
-                    "cartId": 6,
+                    "userId": "65f96fe4b5f2a27b70cf022d",
                     "productId": 3,
                     "quantity": 5
                   }
@@ -209,14 +192,14 @@ paths:
                 data:
                   type: object
                   example: {
-                    "cartId": 6,
+                    "userId": 65f96fe4b5f2a27b70cf022d,
                     "productId": 3,
                     "quantity": 5
                   }
                   properties:
-                    cartId: 
-                      type: number
-                      example: 5
+                    userId: 
+                      type: string
+                      example: 65f96fe4b5f2a27b70cf022d
                     productId:  
                       type: number
                       example: 6

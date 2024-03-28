@@ -12,10 +12,6 @@ export class User {
     @Column()
     lastName: string;
 
-    @Index({ unique: true })
-    @Column()
-    emailAddress: string;
-
     @Column()
     mobileNumber: string;
 
