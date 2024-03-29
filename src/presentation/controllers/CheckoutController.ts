@@ -5,34 +5,51 @@ import { IRequest } from "../../interfaces/IRequest";
 
 @Service()
 export class CheckoutController {
-    constructor(private checkoutService: CheckoutService) {}
+  constructor(private checkoutService: CheckoutService) {}
 
-    async onCreateCheckout(req: IRequest, res: Response, next: NextFunction) {
-        const userId = req.user?.id;
-        try {
-            if (userId) {
-                const createCheckout = await this.checkoutService.ceateCheckout(userId)
-                res.status(200).json({ message: "Success", data: createCheckout })
-            } else {
-                res.status(401).json({ message: "Unauthorized" })
-            }
-        } catch (err) {
-            next(err);
-        }
+  async onCreateCheckout(req: IRequest, res: Response, next: NextFunction) {
+    const userId = req.user?.id;
+    try {
+      if (userId) {
+        const createCheckout = await this.checkoutService.ceateCheckout(userId);
+        res.status(200).json({ message: "Success", data: createCheckout });
+      } else {
+        res.status(401).json({ message: "Unauthorized" });
+      }
+    } catch (err) {
+      next(err);
     }
+  }
 
-    async onGetCheckoutById(req: IRequest, res: Response, next: NextFunction) {
-        try {
-            const checkoutId = Number(req.params.checkoutId);
-            const checkout = await this.checkoutService.getCheckoutById(checkoutId);
+  async onGetCheckoutById(req: IRequest, res: Response, next: NextFunction) {
+    try {
+      const checkoutId = Number(req.params.checkoutId);
+      const checkout = await this.checkoutService.getCheckoutById(checkoutId);
 
-            if (!checkout) {
-                res.status(404).json({message: "The checkout is not found"})
-            } else {
-                res.status(200).json({message: "Success", data: checkout})
-            }
-        } catch (err) {
-            res.status(500).json({message: "Internal server error"})
-        }
+      if (!checkout) {
+        res.status(404).json({ message: "The checkout is not found" });
+      } else {
+        res.status(200).json({ message: "Success", data: checkout });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "Internal server error" });
     }
+  }
+
+  async onGetAllCheckoutsByUserId(req: IRequest, res: Response, next: NextFunction) {
+    const userId = req.user?.id;
+
+    try {
+      if (userId) {
+        const allCheckouts = await this.checkoutService.getAllCheckoutsByUserId(
+          userId
+        );
+        res.status(200).json({ message: "Success", data: allCheckouts });
+      } else {
+        res.status(401).json({ message: "Unauthorized" });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
 }

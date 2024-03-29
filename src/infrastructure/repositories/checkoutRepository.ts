@@ -19,4 +19,16 @@ export class CheckoutRepository implements ICheckoutRepository {
 
     return checkoutItems ?? undefined;
   }
+
+  async getAllCheckoutsByUserId(userId: string): Promise<Checkout[] | undefined> {
+    const checkouts = await myDataSource
+    .createQueryBuilder()
+    .select(["c.id", "c.checkoutDate", "c.checkoutPrice", "ci.productId", "ci.price", "ci.quantity"])
+    .from("checkout", "c")
+    .innerJoin("checkout_item", "ci", "ci.checkoutId = c.id")
+    .where("c.userId = :userId", {userId: userId})
+    .getRawMany();
+
+    return checkouts ?? undefined;
+  }
 }
