@@ -2,6 +2,7 @@ import { Service } from "typedi";
 import { CheckoutRepository } from "../infrastructure/repositories/checkoutRepository";
 import { CartRepository } from "../infrastructure/repositories/cartRepository";
 import { Checkout } from "../domain/entities/checkout";
+import { CheckoutItem } from "../domain/entities/checkoutItem";
 
 @Service()
 export class CheckoutService {
@@ -40,5 +41,9 @@ export class CheckoutService {
       }
 
       return "Cannot create checkout because cart is empty";
+  }
+
+  async getCheckoutById(checkoutId: number): Promise<Checkout | undefined> {
+    return await this.checkoutRepository.getCheckoutById(checkoutId);
   }
 }
