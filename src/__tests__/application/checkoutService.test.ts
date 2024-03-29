@@ -1,5 +1,5 @@
+import exp from "constants";
 import { CheckoutService } from "../../application/checkoutService";
-import { Checkout } from "../../domain/entities/checkout";
 import { CartRepository } from "../../infrastructure/repositories/cartRepository";
 import { CheckoutRepository } from "../../infrastructure/repositories/checkoutRepository";
 
@@ -11,6 +11,8 @@ describe("CheckoutService", () => {
   beforeAll(() => {
     mockCheckoutRepository = {
       createCheckout: jest.fn(),
+      getCheckoutById: jest.fn(),
+      getAllCheckoutsByUserId: jest.fn()
     } as unknown as CheckoutRepository;
 
     mockCartRepository = {
@@ -64,4 +66,58 @@ describe("CheckoutService", () => {
 
     });
   });
+
+  describe("getCheckoutById", () => {
+    it('should return checkout for given checkoutId', async () => {
+      const checkoutId = 1;
+      (mockCheckoutRepository.getCheckoutById as jest.Mock).mockResolvedValue(
+        {
+          "id": checkoutId,
+          "checkoutDate": "2024-03-29T10:16:11.441Z",
+          "checkoutPrice": "5000",
+          "userId": "65f96fe4b5f2a27b70cf022d",
+          "checkoutItems": [
+            {
+              "productId": 1,
+              "checkoutId": checkoutId,
+              "price": "1000",
+              "quantity": 5
+            }
+          ]
+        }as any
+        )
+        const result = await checkoutService.getCheckoutById(checkoutId);
+
+        expect(mockCheckoutRepository.getCheckoutById).toHaveBeenCalledWith(checkoutId);
+        expect(result?.id).toBe(checkoutId);
+    })
+  });
+
+  describe("getAllCheckoutsByUserId", () => {
+    it("should return all checkouts for given userId", async () => {
+      const userId = "65f96fe4b5f2a27b70cf022d";
+      (mockCheckoutRepository.getAllCheckoutsByUserId as jest.Mock).mockResolvedValue([
+        {
+          "c_id": 1,
+          "c_checkoutDate": "2024-03-29T10:16:11.441Z",
+          "c_checkoutPrice": "5000",
+          "ci_productId": 1,
+          "ci_price": "1000",
+          "ci_quantity": 5
+        },
+        {
+          "c_id": 2,
+          "c_checkoutDate": "2024-03-29T10:18:13.670Z",
+          "c_checkoutPrice": "6000",
+          "ci_productId": 1,
+          "ci_price": "1000",
+          "ci_quantity": 2
+        }]
+      );
+
+      const result = await checkoutService.getAllCheckoutsByUserId(userId);
+      expect(mockCheckoutRepository.getAllCheckoutsByUserId).toHaveBeenCalled();
+      expect(result).toHaveLength(2);
+    })
+  })
 });

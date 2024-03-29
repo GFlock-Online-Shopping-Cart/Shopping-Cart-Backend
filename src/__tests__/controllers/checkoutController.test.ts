@@ -86,7 +86,6 @@ describe("CheckoutController", () => {
     } as unknown as Response;
 
     const mockNextFunction = jest.fn() as NextFunction;
-    const mockError = new Error('Some error occurred.');
 
     const mockCheckout = {
       id: checkoutId,
@@ -96,7 +95,7 @@ describe("CheckoutController", () => {
       checkoutItems: [
         {
           productId: 1,
-          checkoutId: 1,
+          checkoutId: checkoutId,
           price: "1000",
           quantity: 5,
         },
