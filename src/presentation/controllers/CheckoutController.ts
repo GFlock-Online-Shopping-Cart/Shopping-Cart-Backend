@@ -12,7 +12,7 @@ export class CheckoutController {
         try {
             if (userId) {
                 const createCheckout = await this.checkoutService.ceateCheckout(userId)
-                res.status(200).json({ message: "Checkout created successfully", data: createCheckout })
+                res.status(200).json({ message: "Success", data: createCheckout })
             } else {
                 res.status(401).json({ message: "Unauthorized" })
             }

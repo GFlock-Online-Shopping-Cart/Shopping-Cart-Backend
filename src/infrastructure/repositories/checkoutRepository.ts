@@ -5,7 +5,7 @@ import { Checkout } from "../../domain/entities/checkout";
 
 @Service()
 export class CheckoutRepository implements ICheckoutRepository {
-    async createCheckout(checkout: Checkout): Promise<Checkout> {
+    async createCheckout(checkout: Checkout): Promise<Checkout | string> {
         return myDataSource.manager.save(checkout);
     }
 }

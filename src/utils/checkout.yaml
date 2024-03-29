@@ -1,0 +1,74 @@
+paths:
+  /api/checkout/create-checkout:
+    post:
+      security:
+      - bearerAuth: []
+      summary: create the checkout after adding the products to the cart
+      description: User can create the checkout after adding the products to the cart
+      tags: 
+        - Checkout
+
+      responses:
+        '200':
+          description: A json object with Checkout created successfully message, checkout items array, checkout price, checkout id, user id and checkout date
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Checkout created successfully",
+                  "data": {
+                    "checkoutItems": [
+                      {
+                        "productId": 1,
+                        "quantity": 5,
+                        "price": "1000",
+                        "checkoutId": 1
+                      }
+                    ],
+                    "checkoutPrice": 5000,
+                    "userId": "65f96fe4b5f2a27b70cf022d",
+                    "id": 1,
+                    "checkoutDate": "2024-03-29T07:36:59.866Z"
+                  }
+                }
+                properties:
+                  message:
+                    type: string
+                    example: "Checkout created successfully"
+                  data: 
+                    type: object
+                    properties:
+                      checkoutItems:
+                        type: array
+                        example: [
+                          {
+                            "productId": 1,
+                            "quantity": 5,
+                            "price": "1000",
+                            "checkoutId": 1
+                          }
+                        ]
+                      checkoutPrice:
+                        type: number
+                        example: 5000
+                      userId: 
+                        type: string
+                        example: "65f96fe4b5f2a27b70cf022d"
+                      id: 
+                        type: number
+                        example: 1
+                      checkoutDate:
+                        type: date
+                        example: "2024-03-29T07:36:59.866Z"
+
+        '401':
+          description: Shows unauthorized message
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+                

@@ -10,7 +10,7 @@ export class CheckoutService {
     private readonly cartRepository: CartRepository
   ) {}
 
-  async ceateCheckout(userId: string): Promise<Checkout> {
+  async ceateCheckout(userId: string): Promise<Checkout | string> {
       const cartItems = await this.cartRepository.viewCart(userId);
 
       const checkoutItems = cartItems.map((item) => ({
@@ -23,20 +23,22 @@ export class CheckoutService {
       for(const checkoutItem of checkoutItems) {
         checkoutPrice += checkoutItem.price * checkoutItem.quantity
       }
-
       const newCheckout = new Checkout();
       newCheckout.checkoutItems = checkoutItems as any;
       newCheckout.checkoutPrice = checkoutPrice;
       newCheckout.userId = userId;
 
+      if (checkoutItems.length > 0) {
 
-      const checkout = await this.checkoutRepository.createCheckout(
-        newCheckout
-      );
+        const checkout = await this.checkoutRepository.createCheckout(
+          newCheckout
+          );
 
-      // remove all cart items
-      await this.cartRepository.removeAllCartItems(userId)
+          // remove all cart items
+          await this.cartRepository.removeAllCartItems(userId)
+          return checkout;
+      }
 
-      return checkout;
+      return "Cannot create checkout because cart is empty";
   }
 }

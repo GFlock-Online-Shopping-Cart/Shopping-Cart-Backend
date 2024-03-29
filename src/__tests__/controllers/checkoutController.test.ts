@@ -9,7 +9,7 @@ describe("CheckoutController", () => {
 
   beforeAll(() => {
     mockCheckoutService = {
-      ceateCheckout: jest.fn(), // corrected here
+      ceateCheckout: jest.fn(),
     } as unknown as CheckoutService;
     checkoutController = new CheckoutController(mockCheckoutService);
   });
@@ -48,7 +48,7 @@ describe("CheckoutController", () => {
       expect(mockCheckoutService.ceateCheckout).toHaveBeenCalled();
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        message: "Checkout created successfully",
+        message: "Success",
         data: mockCheckoutItems,
       });
     });
