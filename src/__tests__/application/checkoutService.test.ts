@@ -84,7 +84,7 @@ describe("CheckoutService", () => {
               "quantity": 5
             }
           ]
-        }as any
+        } as any
         )
         const result = await checkoutService.getCheckoutById(checkoutId);
 
