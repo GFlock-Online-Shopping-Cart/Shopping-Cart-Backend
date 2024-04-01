@@ -36,12 +36,12 @@ export class CheckoutController {
     }
   }
 
-  async onGetAllCheckoutsByUserId(req: IRequest, res: Response, next: NextFunction) {
+  async onViewOrderHistory(req: IRequest, res: Response, next: NextFunction) {
     const userId = req.user?.id;
 
     try {
       if (userId) {
-        const allCheckouts = await this.checkoutService.getAllCheckoutsByUserId(
+        const allCheckouts = await this.checkoutService.viewOrderHistory(
           userId
         );
         res.status(200).json({ message: "Success", data: allCheckouts });

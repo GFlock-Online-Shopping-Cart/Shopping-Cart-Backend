@@ -11,7 +11,7 @@ describe("CheckoutController", () => {
     mockCheckoutService = {
       ceateCheckout: jest.fn(),
       getCheckoutById: jest.fn(),
-      getAllCheckoutsByUserId: jest.fn(),
+      viewOrderHistory: jest.fn(),
     } as unknown as CheckoutService;
     checkoutController = new CheckoutController(mockCheckoutService);
   });
@@ -156,7 +156,7 @@ describe("CheckoutController", () => {
     });
   });
 
-  describe("getAllCheckoutsByUserId", () => {
+  describe("viewOrderHistory", () => {
     const mockRequest = {
       user: { id: "65f96fe4b5f2a27b70cf022" },
     } as unknown as IRequest;
@@ -190,15 +190,15 @@ describe("CheckoutController", () => {
       ];
 
       (
-        mockCheckoutService.getAllCheckoutsByUserId as jest.Mock
+        mockCheckoutService.viewOrderHistory as jest.Mock
       ).mockResolvedValue(mockAllCheckouts);
-      await checkoutController.onGetAllCheckoutsByUserId(
+      await checkoutController.onViewOrderHistory(
         mockRequest,
         mockResponse,
         mockNextFunction
       );
 
-      expect(mockCheckoutService.getAllCheckoutsByUserId).toHaveBeenCalled();
+      expect(mockCheckoutService.viewOrderHistory).toHaveBeenCalled();
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         message: "Success",
@@ -212,7 +212,7 @@ describe("CheckoutController", () => {
         body: {},
       } as unknown as IRequest;
 
-      await checkoutController.onGetAllCheckoutsByUserId(
+      await checkoutController.onViewOrderHistory(
         mockRequest,
         mockResponse,
         mockNextFunction
@@ -225,8 +225,8 @@ describe("CheckoutController", () => {
     });
 
     it('should handle error while getting all checkouts', async () => {
-      (mockCheckoutService.getAllCheckoutsByUserId as jest.Mock).mockRejectedValue(mockError);
-      await checkoutController.onGetAllCheckoutsByUserId(mockRequest, mockResponse, mockNextFunction);
+      (mockCheckoutService.viewOrderHistory as jest.Mock).mockRejectedValue(mockError);
+      await checkoutController.onViewOrderHistory(mockRequest, mockResponse, mockNextFunction);
       expect(mockNextFunction).toHaveBeenCalledWith(mockError);
     });
   });

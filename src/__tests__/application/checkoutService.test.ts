@@ -12,7 +12,7 @@ describe("CheckoutService", () => {
     mockCheckoutRepository = {
       createCheckout: jest.fn(),
       getCheckoutById: jest.fn(),
-      getAllCheckoutsByUserId: jest.fn()
+      viewOrderHistory: jest.fn()
     } as unknown as CheckoutRepository;
 
     mockCartRepository = {
@@ -93,10 +93,10 @@ describe("CheckoutService", () => {
     })
   });
 
-  describe("getAllCheckoutsByUserId", () => {
+  describe("viewOrderHistory", () => {
     it("should return all checkouts for given userId", async () => {
       const userId = "65f96fe4b5f2a27b70cf022d";
-      (mockCheckoutRepository.getAllCheckoutsByUserId as jest.Mock).mockResolvedValue([
+      (mockCheckoutRepository.viewOrderHistory as jest.Mock).mockResolvedValue([
         {
           "c_id": 1,
           "c_checkoutDate": "2024-03-29T10:16:11.441Z",
@@ -115,8 +115,8 @@ describe("CheckoutService", () => {
         }]
       );
 
-      const result = await checkoutService.getAllCheckoutsByUserId(userId);
-      expect(mockCheckoutRepository.getAllCheckoutsByUserId).toHaveBeenCalled();
+      const result = await checkoutService.viewOrderHistory(userId);
+      expect(mockCheckoutRepository.viewOrderHistory).toHaveBeenCalled();
       expect(result).toHaveLength(2);
     })
   })

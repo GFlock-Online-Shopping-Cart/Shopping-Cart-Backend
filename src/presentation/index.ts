@@ -20,6 +20,7 @@ import { decodeIdToken, validateAccessToken } from "./middleware/auth.middleware
 const cors = require("cors");
 const app = express();
 
+
 app.use(cors());
 // JSON body-parser middleware
 app.use(express.json());

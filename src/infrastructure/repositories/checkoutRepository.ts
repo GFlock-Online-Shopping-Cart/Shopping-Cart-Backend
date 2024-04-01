@@ -20,7 +20,7 @@ export class CheckoutRepository implements ICheckoutRepository {
     return checkoutItems ?? undefined;
   }
 
-  async getAllCheckoutsByUserId(userId: string): Promise<Checkout[] | undefined> {
+  async viewOrderHistory(userId: string): Promise<Checkout[] | undefined> {
     const checkouts = await myDataSource
     .createQueryBuilder()
     .select(["c.id", "c.checkoutDate", "c.checkoutPrice", "ci.productId", "ci.price", "ci.quantity"])

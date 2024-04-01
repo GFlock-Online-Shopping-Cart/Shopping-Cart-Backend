@@ -7,5 +7,5 @@ const checkoutController = Container.get(CheckoutController)
 
 router.post("/createCheckout", checkoutController.onCreateCheckout.bind(checkoutController));
 router.get("/getCheckoutById/:checkoutId", checkoutController.onGetCheckoutById.bind(checkoutController));
-router.get("/getAllCheckoutsByUserId", checkoutController.onGetAllCheckoutsByUserId.bind(checkoutController));
+router.get("/viewOrderHistory", checkoutController.onViewOrderHistory.bind(checkoutController));
 export default router;

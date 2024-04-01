@@ -71,7 +71,7 @@ describe("CheckoutRepository", () => {
     });
   });
 
-  describe("getAllCheckoutsByUserId", () => {
+  describe("viewOrderHistory", () => {
     it("should return all checkout for given userId", async () => {
       const userId = "65f96fe4b5f2a27b70cf022d";
       const mockCheckouts = jest.fn().mockResolvedValue([
@@ -104,7 +104,7 @@ describe("CheckoutRepository", () => {
           })
         });
 
-        const result = await checkoutRepository.getAllCheckoutsByUserId(userId);
+        const result = await checkoutRepository.viewOrderHistory(userId);
         expect(result).toEqual(mockCheckouts);
     });
   });

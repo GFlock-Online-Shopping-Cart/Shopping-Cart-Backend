@@ -47,7 +47,7 @@ export class CheckoutService {
     return await this.checkoutRepository.getCheckoutById(checkoutId);
   }
 
-  async getAllCheckoutsByUserId(userId: string): Promise<Checkout[] | undefined> {
-    return await this.checkoutRepository.getAllCheckoutsByUserId(userId);
+  async viewOrderHistory(userId: string): Promise<Checkout[] | undefined> {
+    return await this.checkoutRepository.viewOrderHistory(userId);
   }
 }
