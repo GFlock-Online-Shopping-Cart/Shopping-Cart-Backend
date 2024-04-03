@@ -17,9 +17,9 @@ export const decodeIdToken = (req: IRequest, res: Response, next: NextFunction) 
   const token = req.header("Authorization")!.split(" ")[1];
   const decode = jwt.decode(token);
   console.log("Decode", decode);
-  
-  const userId = (decode!.sub as string).split("|")[1];
 
+  const userId = (decode!.sub as string).split("|")[1];
+  console.log(userId)
   if (userId) {
     req.user = {id: userId}
     console.log("userId", userId);

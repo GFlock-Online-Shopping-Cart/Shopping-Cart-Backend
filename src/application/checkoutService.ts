@@ -2,16 +2,17 @@ import { Service } from "typedi";
 import { CheckoutRepository } from "../infrastructure/repositories/checkoutRepository";
 import { CartRepository } from "../infrastructure/repositories/cartRepository";
 import { Checkout } from "../domain/entities/checkout";
-import { CheckoutItem } from "../domain/entities/checkoutItem";
+import { EmailService } from "../infrastructure/externalServices/emailService";
 
 @Service()
 export class CheckoutService {
   constructor(
     private readonly checkoutRepository: CheckoutRepository,
-    private readonly cartRepository: CartRepository
+    private readonly cartRepository: CartRepository,
+    private readonly emailService: EmailService
   ) {}
 
-  async ceateCheckout(userId: string): Promise<Checkout | string> {
+  async ceateCheckout(userId: string, userEmail: string): Promise<Checkout | string> {
       const cartItems = await this.cartRepository.viewCart(userId);
 
       const checkoutItems = cartItems.map((item) => ({
@@ -28,6 +29,13 @@ export class CheckoutService {
       newCheckout.checkoutItems = checkoutItems as any;
       newCheckout.checkoutPrice = checkoutPrice;
       newCheckout.userId = userId;
+
+      const result = await this.emailService.sendEmail(
+        userEmail,
+        newCheckout
+      )
+      console.log("result", result);
+      
 
       if (checkoutItems.length > 0) {
 
