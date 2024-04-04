@@ -1,12 +1,23 @@
 paths:
-  /api/checkout/create-checkout:
+  /api/checkout/createCheckout:
     post:
       security:
       - bearerAuth: []
       summary: create the checkout after adding the products to the cart
       description: User can create the checkout after adding the products to the cart
+      
       tags: 
         - Checkout
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idToken:
+                  type: string
 
       responses:
         '200':
@@ -16,7 +27,7 @@ paths:
               schema:
                 type: object
                 example: {
-                  "message": "Checkout created successfully",
+                  "message": "Success",
                   "data": {
                     "checkoutItems": [
                       {
@@ -35,7 +46,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: "Checkout created successfully"
+                    example: "Success"
                   data: 
                     type: object
                     properties:
@@ -64,6 +75,147 @@ paths:
 
         '401':
           description: Shows unauthorized message
+
+  /api/checkout/getCheckoutById/{checkoutId}:
+    get:
+      security:
+      - bearerAuth: []
+      summary: show the checkout details for given checkoutId
+      description: User can view the checkout, details with id, checkoutPrice, userId, checkoutDate checkoutItems object with productId, quantity, price and the checkoutId for given checkoutId.
+      parameters:
+        - name: checkoutId
+          in: path
+          required: true
+          schema: 
+            type: number
+      tags:
+         - Checkout
+      responses:
+        '200':
+          description: A JSON object of id, checkoutPrice, userId, checkoutDate checkoutItems object with productId, quantity, price and the checkoutId for given checkoutId.
+          content:
+                    application/json:
+                        schema: 
+                            type: object
+                            example: 
+                              {
+                                "message": "Success",
+                                "data": {
+                                  "checkoutItems": [
+                                    {
+                                      "productId": 1,
+                                      "quantity": 5,
+                                      "price": "1000",
+                                      "checkoutId": 1
+                                    }
+                                  ],
+                                  "checkoutPrice": 5000,
+                                  "userId": "65f96fe4b5f2a27b70cf022d",
+                                  "id": 1,
+                                  "checkoutDate": "2024-03-29T07:36:59.866Z"
+                                }
+                              }
+                            properties:
+                              message:
+                                type: string
+                                example: "Checkout created successfully"
+                              data: 
+                                type: object
+                                properties:
+                                  checkoutItems:
+                                    type: array
+                                    example: [
+                                      {
+                                        "productId": 1,
+                                        "quantity": 5,
+                                        "price": "1000",
+                                        "checkoutId": 1
+                                      }
+                                    ]
+                                  checkoutPrice:
+                                    type: number
+                                    example: 5000
+                                  userId: 
+                                    type: string
+                                    example: "65f96fe4b5f2a27b70cf022d"
+                                  id: 
+                                    type: number
+                                    example: 1
+                                  checkoutDate:
+                                    type: date
+                                    example: "2024-03-29T07:36:59.866Z"
+        '404':
+          description: "Shows the The checkout is not found error message when the product is not in the database for given productId"
+        '500':
+          description: "Shows the Internal server error message when there is an error in server side"
+  
+  /api/checkout/viewOrderHistory:
+    get:
+      security:
+      - bearerAuth: []
+      summary: show the order history for given userId
+      description: User can view the checkout product details, details with id, checkoutPrice, checkoutDate, quantity for given userId.
+    
+      tags:
+         - Checkout
+      responses:
+        '200':
+          description: A JSON object of  id, checkoutPrice, checkoutDate, quantity for given userId.
+          content:
+                    application/json:
+                        schema: 
+                            type: object
+                            example: 
+                              {
+                                "message": "Success",
+                                "data": [
+                                  {
+                                    "c_id": 8,
+                                    "c_checkoutDate": "2024-04-02T11:32:33.750Z",
+                                    "c_checkoutPrice": "10000",
+                                    "ci_productId": 1,
+                                    "ci_price": "1000",
+                                    "ci_quantity": 4
+                                  },
+                                  {
+                                    "c_id": 8,
+                                    "c_checkoutDate": "2024-04-02T11:32:33.750Z",
+                                    "c_checkoutPrice": "10000",
+                                    "ci_productId": 2,
+                                    "ci_price": "2000",
+                                    "ci_quantity": 3
+                                  },
+                                ]
+                              }
+                            properties:
+                              message:
+                                type: string
+                                example: "Success"
+                              data: 
+                                type: array
+                                properties:
+                                  c_id:
+                                    type: number
+                                    example: 8
+                                  ci_price:
+                                    type: number
+                                    example: 5000
+                                  c_checkoutPrice:
+                                    type: number
+                                    example: 10000
+                                  ci_productId:
+                                    type: number
+                                    example: 1
+                                  c_checkoutDate:
+                                    type: date
+                                    example: "2024-03-29T07:36:59.866Z"
+                                  ci_quantity:
+                                    type: number
+                                    example: 3
+        '401':
+          description: "Shows the Unauthorized message"
+        '500':
+          description: "Shows the Internal server error message when there is an error in server side"
 
 components:
   securitySchemes:
