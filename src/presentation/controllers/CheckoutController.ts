@@ -9,11 +9,10 @@ export class CheckoutController {
 
   async onCreateCheckout(req: IRequest, res: Response, next: NextFunction) {
     const userId = req.user?.id;
-    const user = req.body;
-    const userEmail = user.email;
+    const userEmail = req.user?.email;
     
     try {
-      if (userId) {
+      if (userId && userEmail) {
         const createCheckout = await this.checkoutService.ceateCheckout(userId, userEmail);
         res.status(200).json({ message: "Success", data: createCheckout });
       } else {

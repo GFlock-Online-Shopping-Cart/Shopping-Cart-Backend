@@ -15,7 +15,7 @@ import categoryRouter from "./routes/categoryRoutes";
 import checkoutRouter from "./routes/checkoutRoutes"
 
 import { errorMiddleware } from "./middleware/error.middleware";
-import { decodeIdToken, validateAccessToken } from "./middleware/auth.middleware";
+import { decodeAccessToken, validateAccessToken } from "./middleware/auth.middleware";
 
 
 const cors = require("cors");
@@ -28,9 +28,9 @@ app.use(express.json());
 
 app.use("/api/user", userRouter); 
 app.use("/api/product", productRouter);
-app.use("/api/cart", validateAccessToken, decodeIdToken, cartItemRouter);
+app.use("/api/cart", validateAccessToken, decodeAccessToken, cartItemRouter);
 app.use("/api/category", categoryRouter);
-app.use("/api/checkout", validateAccessToken, decodeIdToken, checkoutRouter);
+app.use("/api/checkout", checkoutRouter);
 
 app.use(errorMiddleware);
 
