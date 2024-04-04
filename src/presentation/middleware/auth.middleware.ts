@@ -6,26 +6,41 @@ import { IRequest } from "../../interfaces/IRequest";
 
 dotenv.config();
 
-console.log(process.env.AUTH0_DOMAIN);
-
 export const validateAccessToken = auth({
   audience: process.env.AUTH0_AUDIENCE,
   issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`
 });
 
-export const decodeIdToken = (req: IRequest, res: Response, next: NextFunction) => {
+export const decodeAccessToken = (req: IRequest, res: Response, next: NextFunction) => {
   const token = req.header("Authorization")!.split(" ")[1];
   const decode = jwt.decode(token);
-  console.log("Decode", decode);
-  
-  const userId = (decode!.sub as string).split("|")[1];
 
+  const userId = (decode!.sub as string).split("|")[1];
   if (userId) {
     req.user = {id: userId}
-    console.log("userId", userId);
     next();
   } else {
     res.status(401).json({ message: "Unauthorized" })
   }
+}
+
+export const decodedIdToken = (req: IRequest, res: Response, next: NextFunction) => {
+  const idToken = req.body.idToken;
   
+  const decodedToken = jwt.decode(idToken);
+  console.log("Deeeecoode id", decodedToken);
+  
+
+  if(typeof decodedToken !== 'string') {
+    const userEmail = (decodedToken as jwt.JwtPayload).email
+    console.log("Userrrr email",userEmail);
+    
+    req.user = {...req.user, email: userEmail}
+    next();
+  } else {
+    console.log("hyyoo");
+    
+    res.status(401).json({ message: "Unauthorized" });
+  }
+
 }
