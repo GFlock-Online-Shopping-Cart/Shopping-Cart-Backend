@@ -1,48 +1,63 @@
 import { Service } from "typedi";
 import { ICheckoutDetails } from "../../interfaces/ICheckoutDetails";
-const mailchimp = require("@mailchimp/mailchimp_transactional");
+import { TransactionalEmailsApi, SendSmtpEmail } from "@getbrevo/brevo";
+import { isNotEmpty } from "class-validator";
 
 
 @Service()
 export class EmailService {
-    private mailchimpClient;
-    constructor(){
-        this.mailchimpClient = mailchimp(process.env.MAILCHIMP_API_KEY);
-        console.log("API Key", process.env.MAILCHIMP_API_KEY);
-    }
-    
 
-    async sendEmail(toEmail: string, checkoutDetails: ICheckoutDetails ): Promise<void> {
-        console.log(process.env.MAILCHIMP_FROM_EMAIL);
-        
-        const emailTemplate = {
-            to: [
+  async sendEmail(
+    toEmail: string,
+    checkoutDetails: ICheckoutDetails
+  ): Promise<void> {
+    const apiInstance = new TransactionalEmailsApi();
+    const sendSmtpEmail = new SendSmtpEmail(
+    );
+    sendSmtpEmail.sender = {
+        email: process.env.SIB_FROM_EMAIL,
+    }
+    sendSmtpEmail.templateId = 4
+    sendSmtpEmail.params = {
+        checkoutPrice: checkoutDetails.checkoutPrice,
+        checkoutItems: `
+        <h2>Check your Order Details </h2>
+
+        <h3>Order Items: ${checkoutDetails.checkoutItems
+           .map(
+             (item) =>
+               `<ul>
+               <li>Product Id: ${item.productId} </li>
+               <li>Quantity: ${item.quantity} </li>
+               <li> Price: Rs.${item.price}.00 </li>
+               </ul>
+               </br>`
+           )
+           .join(" ")}</h3>` 
+    }
+    sendSmtpEmail.messageVersions = [
+            {
+              to: [
                 {
-                    email: toEmail,
-                    name: "John",
-                    status: "subscribed"
-                }
-            ],
-            subject: 'Thank you for your order',
-            from: process.env.MAILCHIMP_FROM_EMAIL,
-            html: 
-            `<p>Thank you for your order. Here are your checkout details:</p>
-            <p>Checkout Price: ${checkoutDetails.checkoutPrice}</p>
-            <p>Checkout Items: ${checkoutDetails.checkoutItems.map(item => `<p>Product ID: ${item.productId}, Quantity: ${item.quantity}, Price: ${item.price}</p>`).join('')}</p>`
+                  email: toEmail,
+                },
+              ],
+            },
+          ],
 
+    apiInstance.sendTransacEmail(sendSmtpEmail, {
+        headers: {
+            "api-key": process.env.SIB_API_KEY as string
         }
-
-
-        try {
-            const response = await this.mailchimpClient.messages.send({message: emailTemplate});
-            console.log(response)
-            return response.config.data;
-
-        } catch (error: any) {
-            console.log("error",error);
-            
-            throw new Error(error.message || "Error sending email");
-        }
-    }
+    }).then(
+      function (data: any) {
+        console.log("API called successfully");
+      },
+      function (error: any) {
+        console.error(error);
+      }
+    );
+  }
 
 }
+

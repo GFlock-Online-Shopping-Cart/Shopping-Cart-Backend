@@ -30,11 +30,10 @@ export class CheckoutService {
       newCheckout.checkoutPrice = checkoutPrice;
       newCheckout.userId = userId;
 
-      const result = await this.emailService.sendEmail(
+      await this.emailService.sendEmail(
         userEmail,
         newCheckout
       )
-      console.log("result", result);
       
 
       if (checkoutItems.length > 0) {

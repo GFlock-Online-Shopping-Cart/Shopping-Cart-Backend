@@ -11,8 +11,6 @@ export class CheckoutController {
     const userId = req.user?.id;
     const user = req.body;
     const userEmail = user.email;
-
-    console.log("user email", userEmail);
     
     try {
       if (userId) {
