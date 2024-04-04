@@ -18,6 +18,7 @@ import { errorMiddleware } from "./middleware/error.middleware";
 import { decodeAccessToken, validateAccessToken } from "./middleware/auth.middleware";
 
 
+
 const cors = require("cors");
 const app = express();
 
