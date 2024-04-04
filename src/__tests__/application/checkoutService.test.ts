@@ -1,18 +1,19 @@
-import exp from "constants";
 import { CheckoutService } from "../../application/checkoutService";
 import { CartRepository } from "../../infrastructure/repositories/cartRepository";
 import { CheckoutRepository } from "../../infrastructure/repositories/checkoutRepository";
+import { EmailService } from "../../infrastructure/externalServices/emailService";
 
 describe("CheckoutService", () => {
   let checkoutService: CheckoutService;
   let mockCheckoutRepository: CheckoutRepository;
   let mockCartRepository: CartRepository;
+  let mockEmailService: EmailService
 
   beforeAll(() => {
     mockCheckoutRepository = {
       createCheckout: jest.fn(),
       getCheckoutById: jest.fn(),
-      viewOrderHistory: jest.fn()
+      viewOrderHistory: jest.fn(),
     } as unknown as CheckoutRepository;
 
     mockCartRepository = {
@@ -20,15 +21,21 @@ describe("CheckoutService", () => {
       removeAllCartItems: jest.fn(),
     } as unknown as CartRepository;
 
+    mockEmailService = {
+      sendEmail: jest.fn()
+    } as unknown as EmailService;
+
     checkoutService = new CheckoutService(
       mockCheckoutRepository,
-      mockCartRepository
+      mockCartRepository,
+      mockEmailService
     );
   });
 
   describe("createCheckout", () => {
     it("should create the checkout", async () => {
       const userId = "65f96fe4b5f2a27b70cf022";
+      const userEmail = "randimadias@gmail.com"
       const mockCartItems = [{
         "productId": 1,
         "quantity": 5,
@@ -56,8 +63,9 @@ describe("CheckoutService", () => {
       (mockCartRepository.viewCart as jest.Mock).mockResolvedValue(mockCartItems);
 
       (mockCheckoutRepository.createCheckout as jest.Mock).mockResolvedValue(mockCheckout);
-      await checkoutService.ceateCheckout(userId);
+      await checkoutService.ceateCheckout(userId, userEmail);
 
+      (mockEmailService.sendEmail as jest.Mock).mockResolvedValue(userEmail);
       (mockCartRepository.removeAllCartItems as jest.Mock).mockResolvedValue([]);
 
       expect(mockCartRepository.viewCart).toHaveBeenCalledWith(userId);

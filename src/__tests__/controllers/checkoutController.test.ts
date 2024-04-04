@@ -18,7 +18,10 @@ describe("CheckoutController", () => {
 
   describe("createCheckout", () => {
     const mockRequest = {
-      user: { id: "65f96fe4b5f2a27b70cf022" },
+      user: { 
+        id: "65f96fe4b5f2a27b70cf022",
+        email: "randimadias@gmail.com"
+      },
     } as unknown as IRequest;
 
     const mockResponse = {
