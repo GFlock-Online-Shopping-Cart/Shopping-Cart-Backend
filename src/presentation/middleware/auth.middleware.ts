@@ -27,19 +27,14 @@ export const decodeAccessToken = (req: IRequest, res: Response, next: NextFuncti
 export const decodedIdToken = (req: IRequest, res: Response, next: NextFunction) => {
   const idToken = req.body.idToken;
   
-  const decodedToken = jwt.decode(idToken);
-  console.log("Deeeecoode id", decodedToken);
-  
+  const decodedToken = jwt.decode(idToken);  
 
   if(typeof decodedToken !== 'string') {
     const userEmail = (decodedToken as jwt.JwtPayload).email
-    console.log("Userrrr email",userEmail);
     
     req.user = {...req.user, email: userEmail}
     next();
-  } else {
-    console.log("hyyoo");
-    
+  } else {    
     res.status(401).json({ message: "Unauthorized" });
   }
 
