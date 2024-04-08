@@ -15,9 +15,7 @@ export class CheckoutController {
       if (userId && userEmail) {
         const createCheckout = await this.checkoutService.ceateCheckout(userId, userEmail);
         res.status(200).json({ message: "Success", data: createCheckout });
-      } else {
-        res.status(401).json({ message: "Unauthorized" });
-      }
+      } 
     } catch (err) {
       next(err);
     }
@@ -47,9 +45,7 @@ export class CheckoutController {
           userId
         );
         res.status(200).json({ message: "Success", data: allCheckouts });
-      } else {
-        res.status(401).json({ message: "Unauthorized" });
-      }
+      } 
     } catch (err) {
       next(err);
     }

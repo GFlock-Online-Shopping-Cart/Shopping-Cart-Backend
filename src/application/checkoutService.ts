@@ -3,6 +3,7 @@ import { CheckoutRepository } from "../infrastructure/repositories/checkoutRepos
 import { CartRepository } from "../infrastructure/repositories/cartRepository";
 import { Checkout } from "../domain/entities/checkout";
 import { EmailService } from "../infrastructure/externalServices/emailService";
+import { EmailContentGenerator } from "../infrastructure/externalServices/emailContent";
 
 @Service()
 export class CheckoutService {
@@ -30,9 +31,13 @@ export class CheckoutService {
       newCheckout.checkoutPrice = checkoutPrice;
       newCheckout.userId = userId;
 
+      const checkoutEmail = new EmailContentGenerator();
+      const emailContent = checkoutEmail.generateCheckoutEmailContent(newCheckout);
+      
       await this.emailService.sendEmail(
         userEmail,
-        newCheckout
+        4,
+        emailContent
       )
       
 
