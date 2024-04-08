@@ -34,25 +34,25 @@ export class CheckoutService {
       const checkoutEmail = new EmailContentGenerator();
       const emailContent = checkoutEmail.generateCheckoutEmailContent(newCheckout);
       
-      await this.emailService.sendEmail(
-        userEmail,
-        4,
-        emailContent
-      )
-      
-
       if (checkoutItems.length > 0) {
 
         const checkout = await this.checkoutRepository.createCheckout(
           newCheckout
           );
 
+          await this.emailService.sendEmail(
+            userEmail,
+            4,
+            emailContent
+          )
+
           // remove all cart items
           await this.cartRepository.removeAllCartItems(userId)
           return checkout;
+      } else {
+          return "Cannot create checkout because cart is empty";
       }
 
-      return "Cannot create checkout because cart is empty";
   }
 
   async getCheckoutById(checkoutId: number): Promise<Checkout | undefined> {
