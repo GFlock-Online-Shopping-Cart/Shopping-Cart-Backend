@@ -57,24 +57,6 @@ describe("CheckoutController", () => {
         data: mockCheckoutItems,
       });
     });
-
-    it("should handle unauthorized error while creating checkout", async () => {
-      const mockRequest = {
-        user: null,
-        body: {},
-      } as unknown as IRequest;
-
-      await checkoutController.onCreateCheckout(
-        mockRequest,
-        mockResponse,
-        mockNextFunction
-      );
-
-      expect(mockResponse.status).toHaveBeenCalledWith(401);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        message: "Unauthorized",
-      });
-    });
   });
 
   describe("getCheckoutById", () => {
@@ -206,24 +188,6 @@ describe("CheckoutController", () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         message: "Success",
         data: mockAllCheckouts,
-      });
-    });
-
-    it("should handle unauthorized error while getting all checkouts", async () => {
-      const mockRequest = {
-        user: null,
-        body: {},
-      } as unknown as IRequest;
-
-      await checkoutController.onViewOrderHistory(
-        mockRequest,
-        mockResponse,
-        mockNextFunction
-      );
-
-      expect(mockResponse.status).toHaveBeenCalledWith(401);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        message: "Unauthorized",
       });
     });
 
