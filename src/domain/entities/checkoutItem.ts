@@ -16,8 +16,8 @@ export class CheckoutItem {
     @Column()
     quantity: number;
 
-    @ManyToOne(() => Product, (product) => product.checkoutItems)
-    product: Product
+    // @ManyToOne(() => Product, (product) => product.checkoutItems)
+    // product: Product
 
     @ManyToOne(() => Checkout, (checkout) => checkout.checkoutItems)
     checkout: Checkout

@@ -38,6 +38,6 @@ export class Product {
     @OneToMany(() => CartItem, (cartItem) => cartItem.product)
     cartItems: CartItem[]
 
-    @OneToMany(() => CheckoutItem, checkoutItem => checkoutItem.product)
-    public checkoutItems: CheckoutItem[];
+    // @OneToMany(() => CheckoutItem, checkoutItem => checkoutItem.product)
+    // public checkoutItems: CheckoutItem[];
 }
