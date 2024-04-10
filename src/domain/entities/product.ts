@@ -8,7 +8,8 @@ import {
     JoinTable 
 } from "typeorm"; 
 import { Category } from "./category"; 
-import { Checkout } from "./checkout";
+import { CheckoutItem } from "./checkoutItem";
+import { CartItem } from "./cartItem";
 
 @Entity()
 export class Product {
@@ -27,9 +28,6 @@ export class Product {
     @Column("decimal")
     price: number;
 
-    @Column()
-    stock: number;
-
     @ManyToOne((type) => Category, (category) => category.products, {
         cascade: true,
     })
@@ -37,11 +35,9 @@ export class Product {
     @JoinTable()
     categories: Category
 
-    
-    @OneToMany(() => Product, product => product.products)
-    products: Product[]
+    @OneToMany(() => CartItem, (cartItem) => cartItem.product)
+    cartItems: CartItem[]
 
-    @ManyToMany(() => Checkout)
-    @JoinTable()
-    checkouts: Checkout[]
+    @OneToMany(() => CheckoutItem, checkoutItem => checkoutItem.product)
+    public checkoutItems: CheckoutItem[];
 }

@@ -1,8 +1,6 @@
 import Container from "typedi";
 import { Router } from "express"; 
 import { ProductController } from "../controllers/ProductController"; 
-import { validateAccessToken } from "../middleware/auth.middleware";
-
 
 const router = Router();
 

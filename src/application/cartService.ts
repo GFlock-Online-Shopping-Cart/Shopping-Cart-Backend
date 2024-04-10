@@ -1,5 +1,4 @@
 import { Service } from "typedi"; 
-import { Product } from "../domain/entities/product";
 import { CartItem } from "../domain/entities/cartItem";
 import { CartRepository } from "../infrastructure/repositories/cartRepository";
 
@@ -11,7 +10,7 @@ export class CartService {
         return await this.cartRepository.addToCartProduct(cartDetails, userId);
     }
 
-    async viewCart(userId: string): Promise<Product[]> {
+    async viewCart(userId: string): Promise<CartItem[]> {
         return await this.cartRepository.viewCart(userId);
     }
 

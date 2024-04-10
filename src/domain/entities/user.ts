@@ -1,5 +1,6 @@
 import { Entity, PrimaryColumn, Column, Index, OneToMany } from "typeorm"; 
 import { Checkout } from "./checkout";
+import { CartItem } from "./cartItem";
 
 @Entity()
 export class User {
@@ -24,7 +25,10 @@ export class User {
     @Column()
     province: string;
 
-    @OneToMany(() => Checkout, (checkout) => checkout.users)
+    @OneToMany(() => Checkout, (checkout) => checkout.user)
     checkouts: Checkout[]
+
+    @OneToMany(() => CartItem, (cartItem) => cartItem.user)
+    cartItems: CartItem[]
 
 }

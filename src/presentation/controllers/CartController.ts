@@ -1,5 +1,5 @@
 import { Service } from "typedi"; 
-import { Request, Response, NextFunction } from "express"; 
+import { Response, NextFunction } from "express"; 
 import { CartService } from "../../application/cartService";
 import { IRequest } from "../../interfaces/IRequest";
 

@@ -59,7 +59,7 @@ describe('CartController', () => {
     });
 
     describe("onViewCart", () => {
-        const cartId = 1;
+        const userId = "'65f96fe4b5f2a27b70cf022";
         const mockRequest = {
             user: { id: '65f96fe4b5f2a27b70cf022' },
             body: {}
@@ -69,20 +69,24 @@ describe('CartController', () => {
             status: jest.fn().mockReturnThis(),
         } as unknown as Response;
 
-        const mockCart = {
-            "cart_item_cartId": cartId,
-            "cart_item_productId": 3,
-            "cart_item_quantity": 2,
-            "product_productName": "Uptown Tshirt",
-            "product_productImage": "uptown.jpg",
-            "product_price": 2000.00
-          }
+        const mockCart = [
+            {
+                "productId": 1, 
+                "quantity": 5, 
+                "userId": userId,
+                "product": {
+                    "id": 1, 
+                    "productName": "Moose Tshirt",
+                    "description": "S, M, L sizes are available", 
+                    "productImage": "moose.jpg", 
+                    "price": "1000", 
+                }, 
+            }];
 
         const mockNextFunction = jest.fn() as NextFunction;
 
         it('should view the cart', async () => {
             (mockCartService.viewCart as jest.Mock).mockResolvedValue(mockCart);
-            mockRequest.params = { cartId } as any;
             await cartController.onViewCart(mockRequest, mockResponse, mockNextFunction);
 
             expect(mockCartService.viewCart).toHaveBeenCalled();
