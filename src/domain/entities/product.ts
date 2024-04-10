@@ -27,9 +27,6 @@ export class Product {
     @Column("decimal")
     price: number;
 
-    @Column()
-    stock: number;
-
     @ManyToOne((type) => Category, (category) => category.products, {
         cascade: true,
     })
