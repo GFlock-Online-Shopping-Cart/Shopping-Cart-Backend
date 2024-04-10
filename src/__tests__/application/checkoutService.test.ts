@@ -1,7 +1,7 @@
 import { CheckoutService } from "../../application/checkoutService";
 import { CartRepository } from "../../infrastructure/repositories/cartRepository";
 import { CheckoutRepository } from "../../infrastructure/repositories/checkoutRepository";
-import { EmailService } from "../../infrastructure/externalServices/emailService";
+import { EmailService } from "../../infrastructure/externalServices/BrevoEmailService/emailService";
 
 describe("CheckoutService", () => {
   let checkoutService: CheckoutService;

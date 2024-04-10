@@ -2,8 +2,8 @@ import { Service } from "typedi";
 import { CheckoutRepository } from "../infrastructure/repositories/checkoutRepository";
 import { CartRepository } from "../infrastructure/repositories/cartRepository";
 import { Checkout } from "../domain/entities/checkout";
-import { EmailService } from "../infrastructure/externalServices/emailService";
-import { EmailContentGenerator } from "../infrastructure/externalServices/emailContent";
+import { EmailService } from "../infrastructure/externalServices/BrevoEmailService/emailService";
+import { EmailContentGenerator } from "../infrastructure/externalServices/BrevoEmailService/emailContent";
 
 @Service()
 export class CheckoutService {
