@@ -5,7 +5,7 @@ import { CheckoutController } from "../controllers/CheckoutController";
 import { ValidationMiddleware } from "../middleware/validation.middleware";
 import { CreateCheckoutDTO } from "../dto/checkout.dto";
 
-const email = require('../../infrastructure/externalServices/emailService');
+const email = require('../../infrastructure/externalServices/BrevoEmailService/emailService');
 const router = Router();
 const checkoutController = Container.get(CheckoutController)
 
