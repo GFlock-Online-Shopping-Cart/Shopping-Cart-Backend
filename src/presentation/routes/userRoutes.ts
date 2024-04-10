@@ -1,12 +1,14 @@
 import Container from "typedi";
 import { Router } from "express"; 
-import { UserController } from "../controllers/UserController"
+import { UserController } from "../controllers/UserController"; 
+import { decodeAccessToken, validateAccessToken } from "../middleware/auth.middleware";
+import { ValidationMiddleware } from "../middleware/validation.middleware";
+import { CreateProfileDTO } from "../dto/user.dto";
 
 const router = Router();
 
 const userController = Container.get(UserController)
 
-router.get("/getAllUsers", userController.onGetAllUsers.bind(userController))
-router.get("/getUserById/:userId", userController.onGetUserById.bind(userController))
+router.post("/create-profile", ValidationMiddleware(CreateProfileDTO), validateAccessToken, decodeAccessToken, userController.onCreateProfile.bind(userController))
 
 export default router;

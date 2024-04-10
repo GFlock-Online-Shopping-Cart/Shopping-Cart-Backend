@@ -14,15 +14,16 @@ describe("CartRepository", () => {
 
     describe("addToCartProduct", () => {
         it("should return the cart", async () => {
+            const userId = "65f96fe4b5f2a27b70cf022";
             const mockItem = jest.fn().mockResolvedValue({
-                "cartId": 100,
+                "userId": userId,
                 "productId" : 3,
                 "quantity" : 2
             });
             myDataSource.getRepository = jest.fn().mockReturnValue({
                 save: mockItem,
             });
-            await cartRepository.addToCartProduct(mockItem);
+            await cartRepository.addToCartProduct(mockItem, userId);
 
             expect(myDataSource.getRepository).toHaveBeenCalledWith(CartItem);
             expect(mockItem).toHaveBeenCalled();
@@ -31,46 +32,35 @@ describe("CartRepository", () => {
 
     describe("viewCart", () => {
         it("should return the cart for given cartId", async () => {
-            const cartId = 10;
-            const mockSelect = jest.fn().mockResolvedValue([
+            const userId = "65f96fe4b5f2a27b70cf022";
+            const mockCartItems = [
                 {
-                    "cart_item_cartId": cartId,
-                    "cart_item_productId": 1,
-                    "cart_item_quantity": 2,
-                    "product_productName": "Moose Tshirt",
-                    "product_productImage": "moose.jpg",
-                    "product_price": "990"
-                }, 
-                {
-                    "cart_item_cartId": cartId,
-                    "cart_item_productId": 2,
-                    "cart_item_quantity": 2,
-                    "product_productName": "Uptown Tshirt",
-                    "product_productImage": "uptown.jpg",
-                    "product_price": "1290"
-                } 
-            ]
-            );
+                    "productId": 1, 
+                    "quantity": 5, 
+                    "userId": userId,
+                    "product": {
+                        "id": 1, 
+                        "productName": "Moose Tshirt",
+                        "description": "S, M, L sizes are available", 
+                        "productImage": "moose.jpg", 
+                        "price": "1000", 
+                    }, 
+                }];
 
-            (myDataSource.createQueryBuilder as jest.Mock).mockReturnValueOnce({
-                innerJoinAndSelect: jest.fn().mockReturnValueOnce({
-                    where: jest.fn().mockReturnValueOnce({
-                        select: jest.fn().mockReturnValueOnce({
-                            getRawMany: jest.fn().mockResolvedValueOnce(mockSelect)
-                        })
-                    })
-                }) 
+            const mockFind = jest.fn().mockResolvedValue(mockCartItems);
+
+            myDataSource.getRepository = jest.fn().mockReturnValue({
+                find: mockFind,
             })
-            const result = await cartRepository.viewCart(cartId);
+            const result = await cartRepository.viewCart(userId);
 
-            expect(result).toEqual(mockSelect);
-            expect(myDataSource.createQueryBuilder).toHaveBeenCalledTimes(1);
+            expect(result).toEqual(mockCartItems);
         });
     });
 
     describe("removeProductFromCart", () => {
         it("should remove a product from given cartId and productId", async () => {
-            const cartId = 10;
+            const userId = "65f96fe4b5f2a27b70cf022";
             const productId = 20;
 
             const mockFindOne = jest.fn().mockReturnValueOnce({
@@ -86,7 +76,7 @@ describe("CartRepository", () => {
                 },     
             );
 
-            const result = await cartRepository.removeProductFromCart(cartId, productId);
+            const result = await cartRepository.removeProductFromCart(userId, productId);
 
             expect(myDataSource.getRepository).toHaveBeenCalledWith(CartItem);
             expect(result).toBe("Cart item removed successfully.")
@@ -95,30 +85,26 @@ describe("CartRepository", () => {
 
     describe("modifyCart", () => {
         it("should modify the cart item entity for given cartId and productId", async () => {
-            const cartId = 6;
+            const userId = "65f96fe4b5f2a27b70cf022";
             const productId = 10;
             const quantity = 20;
 
             const cartDetails = {
-                cartId: 6,
                 productId: 10,
                 quantity: 30
             }
 
             const mockFindOneBy = jest.fn().mockResolvedValue({
-                cartId: cartId,
                 productId: productId,
                 quantity: quantity
             });
 
             const mockMerge = jest.fn().mockResolvedValue({
-                cartId: cartId,
                 productId: productId,
                 quantity: 30
             });
 
             const mockSave = jest.fn().mockResolvedValue({
-                cartId: cartId,
                 productId: productId,
                 quantity: 30
             });
@@ -129,7 +115,7 @@ describe("CartRepository", () => {
                 save: mockSave
             });
 
-            const result = await cartRepository.modifyCart(cartDetails);
+            const result = await cartRepository.modifyCart(cartDetails, userId);
 
             expect(result).toEqual(cartDetails);
         });

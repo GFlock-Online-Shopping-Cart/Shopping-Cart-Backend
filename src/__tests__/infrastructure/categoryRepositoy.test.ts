@@ -77,7 +77,7 @@ describe("CategoryRepository", () => {
   describe("getProductsByCategoryId", () => {
     it('should return all products for given categoryId', async () => {
       const categoryId = 10;
-      const mockFindOneBy = jest.fn().mockResolvedValue(categoryId);
+      const mockFindOneOrFail = jest.fn().mockResolvedValue(categoryId);
       const mockSelect = jest.fn().mockResolvedValue([
         {
           "category_id": categoryId,
@@ -91,7 +91,7 @@ describe("CategoryRepository", () => {
         },
       ]);
       myDataSource.getRepository = jest.fn().mockReturnValue({
-        findOneBy: mockFindOneBy
+        findOneOrFail: mockFindOneOrFail
       });
       
       

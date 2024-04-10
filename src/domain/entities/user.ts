@@ -1,20 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index, OneToMany } from "typeorm"; 
+import { Entity, PrimaryColumn, Column, Index, OneToMany } from "typeorm"; 
 import { Checkout } from "./checkout";
+import { CartItem } from "./cartItem";
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryColumn({type: "varchar"})
+    id: string;
     
     @Column()
     firstName: string;
 
     @Column()
     lastName: string;
-
-    @Index({ unique: true })
-    @Column()
-    emailAddress: string;
 
     @Column()
     mobileNumber: string;
@@ -28,7 +25,10 @@ export class User {
     @Column()
     province: string;
 
-    @OneToMany(() => Checkout, (checkout) => checkout.users)
+    @OneToMany(() => Checkout, (checkout) => checkout.user)
     checkouts: Checkout[]
+
+    @OneToMany(() => CartItem, (cartItem) => cartItem.user)
+    cartItems: CartItem[]
 
 }

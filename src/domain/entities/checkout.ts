@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne } from "typeorm"; 
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, OneToMany, JoinColumn } from "typeorm"; 
+import { CheckoutItem } from "./checkoutItem";
 import { User } from "./user";
 
 @Entity()
@@ -9,17 +10,19 @@ export class Checkout {
     @CreateDateColumn()
     checkoutDate: Date;
 
-    @Column("decimal")
+    @Column({type: 'decimal'})
     checkoutPrice: number;
 
+    @ManyToOne(() => User, user => user.checkouts)
+    @JoinColumn({name: "userId"})
+    user: User;
+
     @Column()
-    cardNumber: number;
+    userId: string;
 
-    @ManyToOne(() => User, (user) => user.checkouts, {
-        cascade: true,
-    })
-    users: User
-
+    @OneToMany(() => CheckoutItem, checkoutItem => checkoutItem.checkout, {cascade: true})
+    checkoutItems: CheckoutItem[];
     
 }
+
 

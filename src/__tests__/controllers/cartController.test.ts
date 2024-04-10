@@ -1,6 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { CartController } from "../../presentation/controllers/CartController";
 import { CartService } from "../../application/cartService";
+import { IRequest } from "../../interfaces/IRequest";
 
 describe('CartController', () => {
     let cartController: CartController;
@@ -22,7 +23,10 @@ describe('CartController', () => {
             "productId" : 3,
             "quantity" : 2
         }
-        const mockRequest = {} as Request;
+        const mockRequest = {
+            user: { id: '65f96fe4b5f2a27b70cf022' },
+            body: {}
+        } as unknown as IRequest;
         const mockResponse = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
@@ -55,27 +59,34 @@ describe('CartController', () => {
     });
 
     describe("onViewCart", () => {
-        const cartId = 1;
-        const mockRequest = {} as Request;
+        const userId = "'65f96fe4b5f2a27b70cf022";
+        const mockRequest = {
+            user: { id: '65f96fe4b5f2a27b70cf022' },
+            body: {}
+        } as unknown as IRequest;
         const mockResponse = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
         } as unknown as Response;
 
-        const mockCart = {
-            "cart_item_cartId": cartId,
-            "cart_item_productId": 3,
-            "cart_item_quantity": 2,
-            "product_productName": "Uptown Tshirt",
-            "product_productImage": "uptown.jpg",
-            "product_price": 2000.00
-          }
+        const mockCart = [
+            {
+                "productId": 1, 
+                "quantity": 5, 
+                "userId": userId,
+                "product": {
+                    "id": 1, 
+                    "productName": "Moose Tshirt",
+                    "description": "S, M, L sizes are available", 
+                    "productImage": "moose.jpg", 
+                    "price": "1000", 
+                }, 
+            }];
 
         const mockNextFunction = jest.fn() as NextFunction;
 
         it('should view the cart', async () => {
             (mockCartService.viewCart as jest.Mock).mockResolvedValue(mockCart);
-            mockRequest.params = { cartId } as any;
             await cartController.onViewCart(mockRequest, mockResponse, mockNextFunction);
 
             expect(mockCartService.viewCart).toHaveBeenCalled();
@@ -98,7 +109,10 @@ describe('CartController', () => {
         const mockCartId = 6;
         const mockProductId = 3;
 
-        const mockRequest = {} as Request;
+        const mockRequest = {
+            user: { id: '65f96fe4b5f2a27b70cf022' },
+            body: {}
+        } as unknown as IRequest;
         const mockResponse = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
@@ -133,7 +147,10 @@ describe('CartController', () => {
         const mockCartId = 20;
         const mockProductId = 30;
 
-        const mockRequest = {} as Request;
+        const mockRequest = {
+            user: { id: '65f96fe4b5f2a27b70cf022' },
+            body: {}
+        } as unknown as IRequest;
         const mockResponse = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),

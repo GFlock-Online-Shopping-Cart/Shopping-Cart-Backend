@@ -1,0 +1,93 @@
+paths:
+  /api/user/create-profile:
+    post:
+      security:
+      - bearerAuth: []
+      summary: create a profile for registered User
+      description: User can create a profile after the registration
+      tags:
+        - User
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  example: "Randima"
+                lastName:
+                  type: string
+                  example: "Dias"
+                mobilenumber:
+                  type: string
+                  example: "0722343588"
+                streetAddress:
+                  type: string
+                  example: "No 60/2, Wackwella Road"
+                city: 
+                  type: string
+                  example: "Galle"
+                province:
+                  type: string
+                  example: "Southern"
+
+      responses:
+        '200':
+          description: A json object with Profile created successfully message with data onject with id, firstName, lastName, mobilenumber, streetAddress, city, province
+          content:
+            application/json:
+              schema:
+                type: object
+                example: 
+                  {
+                    "message": "Profile created successfully",
+                    "data": {
+                      "id": "65faa11f3d734bfa524ad50c",
+                      "firstName": "Surith",
+                      "lastName": "Jayawardane",
+                      "mobileNumber": "0714582098",
+                      "streetAddress": "No 24, Queens Road, Colombo 7",
+                      "city": "Colombo",
+                      "province": "Western"
+                    }
+                  }
+                properties:
+                  message:
+                    type: string
+                    example: Profile created successfully
+                  data: 
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 65faa11f3d734bfa524ad50c
+                      firstName:
+                        type: string
+                        example: Randima
+                      lastName: 
+                        type: string
+                        example: Dias
+                      mobilenumber: 
+                        type: string
+                        example: 0729485458
+                      streetAddress: 
+                        type: string
+                        example: No 24, Queens Road, Colombo 7
+                      city:
+                        type: string
+                        example: Colombo
+                      province:
+                        type: string
+                        example: Western
+
+        '401':
+          description: "Shows the unauthorized message when user is not registered"
+                    
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
