@@ -31,7 +31,7 @@ export class CategoryRepository implements ICategoryRepository {
             .createQueryBuilder(Category, "category")
             .innerJoinAndSelect(Product, "product", "category.id = product.categoriesId")
             .where("category.id = :categoryId", {categoryId})
-            .select(["category.id", "category.categoryName", "product.productName", "product.productImage", "product.description", "product.price"])
+            .select(["category.id", "category.categoryName", "product.id", "product.productName", "product.productImage", "product.description", "product.price"])
             .getRawMany();
             return categoryProducts;
         } catch (error) {
