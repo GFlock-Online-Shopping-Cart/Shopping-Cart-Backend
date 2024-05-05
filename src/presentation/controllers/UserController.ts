@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express';
+import { Request, NextFunction, Response } from 'express';
 import { UserService } from '../../application/userService'; 
 import { Service } from 'typedi';
 import { IRequest } from '../../interfaces/IRequest';
@@ -22,5 +22,11 @@ export class UserController {
           next(err);
         }
         // validate inputs
+      }
+
+      async onGetProfileById(req: Request, res: Response, next: NextFunction) {
+        const userId = req.params.userId;
+        const profile = await this.userService.getUserById(userId);
+        res.status(200).json({message: "success", data: profile});
       }
 }
