@@ -10,5 +10,5 @@ const router = Router();
 const userController = Container.get(UserController)
 
 router.post("/create-profile", ValidationMiddleware(CreateProfileDTO), validateAccessToken, decodeAccessToken, userController.onCreateProfile.bind(userController))
-
+router.get("/get-profile/:userId", validateAccessToken, decodeAccessToken, userController.onGetProfileById.bind(userController))
 export default router;

@@ -13,4 +13,8 @@ export class UserService {
             throw error
         }
     }
+
+    async getUserById(userId: string): Promise<User | undefined> {
+        return await this.userRepository.getProfileByUserId(userId);
+    }
 }

@@ -22,4 +22,11 @@ export class UserRepository implements IUserRepository {
         const result = await myDataSource.getRepository(User).save(newUser);  //save method returns an instance of newUser object.
         return result;
     }
+
+    async getProfileByUserId(userId: string): Promise<User | undefined> {
+        const profile = await myDataSource.getRepository(User).findOneBy({
+            id: userId
+        })
+        return profile ?? undefined
+    }
 }
